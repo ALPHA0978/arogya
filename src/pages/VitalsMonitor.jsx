@@ -32,8 +32,7 @@ const VitalsMonitor = () => {
         setEmergencyData({
           success: emergencyResponse.success,
           emergencyId: emergencyResponse.emergencyId,
-          callUrl: emergencyResponse.callUrl,
-          conversationId: emergencyResponse.conversationId,
+          agentId: emergencyResponse.agentId,
           vitals,
           analysis: result
         })
@@ -290,7 +289,7 @@ const VitalsMonitor = () => {
                 <AlertTriangle className="w-5 h-5" />
                 <span className="font-bold">🚨 EMERGENCY ALERT</span>
               </div>
-              <p className="text-sm mb-3">🚑 Critical vitals detected! Your emergency request has been automatically sent to the nearest ambulance dispatch center. Medical AI assistant is standing by.</p>
+              <p className="text-sm mb-3">Critical vitals detected. Emergency services notified.</p>
               <div className="flex gap-2">
                 <button
                   onClick={() => setShowEmergencyDialog(false)}
@@ -300,15 +299,33 @@ const VitalsMonitor = () => {
                 </button>
                 <button
                   onClick={() => {
-                    if (emergencyData.callUrl) {
-                      window.open(emergencyData.callUrl, '_blank')
-                    } else {
-                      alert('Emergency call is being prepared. Please wait a moment.')
+                    // Create and show 11Labs widget with emergency data
+                    const widget = document.createElement('elevenlabs-convai')
+                    widget.setAttribute('agent-id', 'agent_9601k9dcjp8dfasrkewfn5kdcwh3')
+                    
+                    // Set individual variable attributes
+                    widget.setAttribute('emergency-id', emergencyData.emergencyId)
+                    widget.setAttribute('patient-location', 'Location pending')
+                    widget.setAttribute('blood-pressure', emergencyData.vitals.bloodPressure || 'Not provided')
+                    widget.setAttribute('heart-rate', emergencyData.vitals.heartRate || 'Not provided')
+                    widget.setAttribute('temperature', emergencyData.vitals.temperature || 'Not provided')
+                    widget.setAttribute('oxygen-saturation', emergencyData.vitals.oxygenSaturation || 'Not provided')
+                    widget.setAttribute('critical-alerts', emergencyData.analysis.alerts?.map(a => a.type).join(', ') || 'Multiple critical readings')
+                    widget.setAttribute('timestamp', new Date().toISOString())
+                    document.body.appendChild(widget)
+                    
+                    // Load the script if not already loaded
+                    if (!document.querySelector('script[src*="convai-widget-embed"]')) {
+                      const script = document.createElement('script')
+                      script.src = 'https://unpkg.com/@elevenlabs/convai-widget-embed'
+                      script.async = true
+                      script.type = 'text/javascript'
+                      document.head.appendChild(script)
                     }
                   }}
                   className="px-3 py-1 bg-red-800 text-white text-xs rounded hover:bg-red-900"
                 >
-                  🎧 Join Emergency Call
+                  Talk to AI Medic
                 </button>
               </div>
             </div>

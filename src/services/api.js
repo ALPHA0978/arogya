@@ -8,6 +8,9 @@ export const diagnosisAPI = {
   analyzeSymptoms: async (symptoms, patientData = {}) => {
     return await MedicalAI.analyzeSymptoms(symptoms, patientData)
   },
+  analyzeDocument: async (documentText) => {
+    return await MedicalAI.analyzeDocument(documentText)
+  },
   analyzeVitals: async (vitals) => {
     try {
       const vitalsText = `Analyze these vital signs and provide medical assessment:
@@ -115,6 +118,12 @@ export const diagnosisAPI = {
         recommendations: ['Unable to analyze vitals with AI. Please consult a healthcare professional for proper assessment.']
       }
     }
+  },
+  predictHealthOutcomes: async (patientData, vitalsHistory) => {
+    return await MedicalAI.predictHealthOutcomes(patientData, vitalsHistory)
+  },
+  analyzeHealthTrends: async (healthData) => {
+    return await MedicalAI.analyzeHealthTrends(healthData)
   },
   chatWithBot
 }

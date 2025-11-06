@@ -109,7 +109,7 @@ const ChatAssistant = () => {
                     ? 'bg-teal-600 text-white'
                     : 'bg-gray-100 text-gray-900'
                 }`}>
-                  <p className="text-sm">{message.text}</p>
+                  <div className="text-sm whitespace-pre-wrap" dangerouslySetInnerHTML={{ __html: message.text.replace(/&#39;/g, "'").replace(/&quot;/g, '"').replace(/&amp;/g, '&').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') }} />
                   <p className={`text-xs mt-1 ${
                     message.sender === 'user' ? 'text-teal-100' : 'text-gray-500'
                   }`}>

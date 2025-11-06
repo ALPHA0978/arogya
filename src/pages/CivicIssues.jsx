@@ -1,7 +1,11 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { MapPin, Camera, Send, AlertTriangle, Droplets, Trash2, Bug } from 'lucide-react'
+import { db } from '../services/firebaseConfig'
+import { collection, addDoc, query, orderBy, limit, onSnapshot } from 'firebase/firestore'
+import { useAuth } from '../context/AuthContext'
 
 const CivicIssues = () => {
+  const { user } = useAuth()
   const [formData, setFormData] = useState({
     type: '',
     description: '',
@@ -9,6 +13,8 @@ const CivicIssues = () => {
     image: null
   })
   const [loading, setLoading] = useState(false)
+  const [reports, setReports] = useState([])
+  const [locationLoading, setLocationLoading] = useState(false)
 
   const issueTypes = [
     { id: 'water', label: 'Water Contamination', icon: <Droplets className="w-5 h-5" />, color: 'text-blue-600' },
@@ -17,22 +23,64 @@ const CivicIssues = () => {
     { id: 'other', label: 'Other Issues', icon: <AlertTriangle className="w-5 h-5" />, color: 'text-orange-600' }
   ]
 
-  const recentReports = [
-    { id: 1, type: 'Water Contamination', location: 'Main Street', status: 'Pending', date: '2024-01-15' },
-    { id: 2, type: 'Waste Accumulation', location: 'Park Area', status: 'Resolved', date: '2024-01-14' },
-    { id: 3, type: 'Vector Breeding', location: 'Residential Area', status: 'In Progress', date: '2024-01-13' }
-  ]
+  useEffect(() => {
+    const q = query(collection(db, 'civic_reports'), orderBy('timestamp', 'desc'), limit(10))
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const reportsData = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+        date: doc.data().timestamp?.toDate().toLocaleDateString() || new Date().toLocaleDateString()
+      }))
+      setReports(reportsData)
+    })
+    return unsubscribe
+  }, [])
+
+  const getCurrentLocation = () => {
+    setLocationLoading(true)
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          try {
+            const response = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${position.coords.latitude}&longitude=${position.coords.longitude}&localityLanguage=en`)
+            const data = await response.json()
+            setFormData(prev => ({ ...prev, location: `${data.locality}, ${data.principalSubdivision}` }))
+          } catch (error) {
+            setFormData(prev => ({ ...prev, location: `${position.coords.latitude}, ${position.coords.longitude}` }))
+          }
+          setLocationLoading(false)
+        },
+        () => {
+          setLocationLoading(false)
+          alert('Location access denied')
+        }
+      )
+    }
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
     
-    // Simulate API call
-    setTimeout(() => {
-      setLoading(false)
+    try {
+      const reportData = {
+        ...formData,
+        userId: user?.uid || 'anonymous',
+        userEmail: user?.email || 'anonymous',
+        status: 'Pending',
+        timestamp: new Date(),
+        typeLabel: issueTypes.find(t => t.id === formData.type)?.label || formData.type
+      }
+      
+      await addDoc(collection(db, 'civic_reports'), reportData)
       setFormData({ type: '', description: '', location: '', image: null })
       alert('Report submitted successfully!')
-    }, 2000)
+    } catch (error) {
+      console.error('Error submitting report:', error)
+      alert('Error submitting report. Please try again.')
+    } finally {
+      setLoading(false)
+    }
   }
 
   const getStatusColor = (status) => {
@@ -95,16 +143,26 @@ const CivicIssues = () => {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Location</label>
-                <div className="relative">
-                  <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                  <input
-                    type="text"
-                    value={formData.location}
-                    onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-                    placeholder="Enter location or address"
-                    required
-                  />
+                <div className="flex gap-2">
+                  <div className="relative flex-1">
+                    <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                    <input
+                      type="text"
+                      value={formData.location}
+                      onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                      className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                      placeholder="Enter location or address"
+                      required
+                    />
+                  </div>
+                  <button
+                    type="button"
+                    onClick={getCurrentLocation}
+                    disabled={locationLoading}
+                    className="px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
+                  >
+                    {locationLoading ? '...' : 'GPS'}
+                  </button>
                 </div>
               </div>
 
@@ -154,10 +212,10 @@ const CivicIssues = () => {
             <h2 className="text-2xl font-semibold text-gray-900 mb-6">Recent Reports</h2>
             
             <div className="space-y-4">
-              {recentReports.map((report) => (
+              {reports.map((report) => (
                 <div key={report.id} className="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition-colors">
                   <div className="flex items-start justify-between mb-2">
-                    <h3 className="font-medium text-gray-900">{report.type}</h3>
+                    <h3 className="font-medium text-gray-900">{report.typeLabel || report.type}</h3>
                     <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(report.status)}`}>
                       {report.status}
                     </span>
@@ -167,6 +225,9 @@ const CivicIssues = () => {
                     <span>{report.location}</span>
                   </div>
                   <p className="text-sm text-gray-500 mt-2">{report.date}</p>
+                  {report.description && (
+                    <p className="text-sm text-gray-700 mt-1">{report.description.substring(0, 100)}...</p>
+                  )}
                 </div>
               ))}
             </div>
@@ -175,12 +236,12 @@ const CivicIssues = () => {
               <h3 className="font-medium text-blue-900 mb-2">Community Impact</h3>
               <div className="grid grid-cols-2 gap-4 text-sm">
                 <div>
-                  <span className="text-blue-700 font-medium">Reports This Month:</span>
-                  <span className="ml-2 text-blue-900">24</span>
+                  <span className="text-blue-700 font-medium">Total Reports:</span>
+                  <span className="ml-2 text-blue-900">{reports.length}</span>
                 </div>
                 <div>
                   <span className="text-blue-700 font-medium">Resolved:</span>
-                  <span className="ml-2 text-blue-900">18</span>
+                  <span className="ml-2 text-blue-900">{reports.filter(r => r.status === 'Resolved').length}</span>
                 </div>
               </div>
             </div>

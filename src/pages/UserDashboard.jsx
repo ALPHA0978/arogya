@@ -31,6 +31,12 @@ const UserDashboard = () => {
       link: '/chat'
     },
     {
+      icon: <TrendingUp className="w-8 h-8 text-purple-600" />,
+      title: 'Report Analyzer',
+      description: 'AI-powered medical report analysis and insights',
+      link: '/predictor'
+    },
+    {
       icon: <AlertTriangle className="w-8 h-8 text-orange-600" />,
       title: 'Civic Issues',
       description: 'Report environmental and sanitation issues in your area',

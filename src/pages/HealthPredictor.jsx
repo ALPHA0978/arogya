@@ -1,8 +1,9 @@
 import { useState } from 'react'
-import { TrendingUp, Brain, AlertTriangle, Target, Activity, Calendar, Loader } from 'lucide-react'
+import { TrendingUp, Brain, AlertTriangle, Target, Activity, Calendar, Loader, Upload, FileText, Download } from 'lucide-react'
 import { diagnosisAPI } from '../services/api'
 
 const HealthPredictor = () => {
+  const [activeTab, setActiveTab] = useState('analyzer')
   const [patientData, setPatientData] = useState({
     age: '',
     gender: '',
@@ -15,6 +16,12 @@ const HealthPredictor = () => {
   const [predictions, setPredictions] = useState(null)
   const [trends, setTrends] = useState(null)
   const [loading, setLoading] = useState(false)
+  
+  // Document analyzer state
+  const [uploadedFile, setUploadedFile] = useState(null)
+  const [documentText, setDocumentText] = useState('')
+  const [reportAnalysis, setReportAnalysis] = useState(null)
+  const [analyzingReport, setAnalyzingReport] = useState(false)
 
   const analyzePredictions = async () => {
     if (!patientData.age) return
@@ -66,15 +73,47 @@ const HealthPredictor = () => {
     }
   }
 
+  const handleFileUpload = (e) => {
+    const file = e.target.files[0]
+    if (file) {
+      setUploadedFile(file)
+      
+      // Read file content
+      const reader = new FileReader()
+      reader.onload = (event) => {
+        setDocumentText(event.target.result)
+      }
+      reader.readAsText(file)
+    }
+  }
+
+  const analyzeDocument = async () => {
+    if (!documentText.trim()) return
+    
+    setAnalyzingReport(true)
+    try {
+      const analysis = await diagnosisAPI.analyzeDocument(documentText)
+      setReportAnalysis(analysis)
+    } catch (error) {
+      console.error('Document analysis error:', error)
+      setReportAnalysis({
+        error: 'Failed to analyze document. Please try again.'
+      })
+    } finally {
+      setAnalyzingReport(false)
+    }
+  }
+
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Health Predictor</h1>
-          <p className="text-xl text-gray-600">AI-powered health outcome predictions and risk assessment</p>
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">Report Analyzer</h1>
+          <p className="text-xl text-gray-600">AI-powered medical report analysis</p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {false && (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Input Section */}
           <div className="space-y-6">
             {/* Patient Data */}
@@ -363,6 +402,170 @@ const HealthPredictor = () => {
             )}
           </div>
         </div>
+        )}
+
+        {activeTab === 'analyzer' && (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Document Upload Section */}
+            <div className="bg-white rounded-2xl shadow-lg p-6">
+              <h2 className="text-2xl font-semibold text-gray-900 mb-6 flex items-center">
+                <FileText className="w-6 h-6 mr-2 text-blue-500" />
+                Upload Medical Report
+              </h2>
+              
+              <div className="space-y-6">
+                {/* File Upload */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Select Document
+                  </label>
+                  <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-blue-400 transition-colors">
+                    <input
+                      type="file"
+                      accept=".txt,.pdf,.doc,.docx"
+                      onChange={handleFileUpload}
+                      className="hidden"
+                      id="document-upload"
+                    />
+                    <label htmlFor="document-upload" className="cursor-pointer">
+                      <Upload className="w-8 h-8 text-gray-400 mx-auto mb-2" />
+                      <p className="text-gray-600">Click to upload medical report</p>
+                      <p className="text-sm text-gray-400">Supports TXT, PDF, DOC files</p>
+                    </label>
+                    {uploadedFile && (
+                      <p className="mt-2 text-sm text-blue-600">File: {uploadedFile.name}</p>
+                    )}
+                  </div>
+                </div>
+
+                {/* Manual Text Input */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Or Paste Report Text
+                  </label>
+                  <textarea
+                    value={documentText}
+                    onChange={(e) => setDocumentText(e.target.value)}
+                    placeholder="Paste your medical report text here..."
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                    rows="10"
+                  />
+                </div>
+
+                <button
+                  onClick={analyzeDocument}
+                  disabled={analyzingReport || !documentText.trim()}
+                  className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+                >
+                  {analyzingReport ? (
+                    <>
+                      <Loader className="w-5 h-5 animate-spin" />
+                      Analyzing Report...
+                    </>
+                  ) : (
+                    <>
+                      <Brain className="w-5 h-5" />
+                      Analyze Report
+                    </>
+                  )}
+                </button>
+              </div>
+            </div>
+
+            {/* Analysis Results */}
+            <div className="bg-white rounded-2xl shadow-lg p-6">
+              <h2 className="text-2xl font-semibold text-gray-900 mb-6">Analysis Results</h2>
+              
+              {analyzingReport && (
+                <div className="text-center py-8">
+                  <Loader className="w-12 h-12 text-blue-600 animate-spin mx-auto mb-4" />
+                  <p className="text-gray-600">Analyzing medical report...</p>
+                </div>
+              )}
+
+              {reportAnalysis && !analyzingReport && (
+                <div className="space-y-6">
+                  {reportAnalysis.error ? (
+                    <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
+                      <p className="text-red-800">{reportAnalysis.error}</p>
+                    </div>
+                  ) : (
+                    <>
+                      {/* Summary */}
+                      {reportAnalysis.summary && (
+                        <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
+                          <h3 className="text-lg font-semibold text-blue-900 mb-2">Report Summary</h3>
+                          <p className="text-blue-800">{reportAnalysis.summary}</p>
+                        </div>
+                      )}
+
+                      {/* Key Findings */}
+                      {reportAnalysis.keyFindings && (
+                        <div>
+                          <h3 className="text-lg font-semibold text-gray-900 mb-3">Key Findings</h3>
+                          <div className="space-y-2">
+                            {reportAnalysis.keyFindings.map((finding, index) => (
+                              <div key={index} className="p-3 bg-gray-50 rounded-lg">
+                                <span className="text-gray-800">{finding}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Abnormal Values */}
+                      {reportAnalysis.abnormalValues && reportAnalysis.abnormalValues.length > 0 && (
+                        <div>
+                          <h3 className="text-lg font-semibold text-gray-900 mb-3">Abnormal Values</h3>
+                          <div className="space-y-2">
+                            {reportAnalysis.abnormalValues.map((value, index) => (
+                              <div key={index} className="p-3 bg-yellow-50 rounded-lg border border-yellow-200">
+                                <div className="font-medium text-yellow-900">{value.parameter}</div>
+                                <div className="text-sm text-yellow-800">
+                                  Value: {value.value} (Normal: {value.normalRange})
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Recommendations */}
+                      {reportAnalysis.recommendations && (
+                        <div>
+                          <h3 className="text-lg font-semibold text-gray-900 mb-3">Recommendations</h3>
+                          <ul className="space-y-2">
+                            {reportAnalysis.recommendations.map((rec, index) => (
+                              <li key={index} className="flex items-start gap-2">
+                                <div className="w-2 h-2 bg-green-500 rounded-full mt-2"></div>
+                                <span className="text-gray-700">{rec}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+
+                      {/* Follow-up Actions */}
+                      {reportAnalysis.followUp && (
+                        <div className="p-4 bg-green-50 rounded-lg border border-green-200">
+                          <h3 className="text-lg font-semibold text-green-900 mb-2">Follow-up Actions</h3>
+                          <p className="text-green-800">{reportAnalysis.followUp}</p>
+                        </div>
+                      )}
+                    </>
+                  )}
+                </div>
+              )}
+
+              {!reportAnalysis && !analyzingReport && (
+                <div className="text-center py-8 text-gray-500">
+                  <FileText className="w-16 h-16 mx-auto mb-4 opacity-50" />
+                  <p>Upload a medical report to get AI analysis</p>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   )

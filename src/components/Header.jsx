@@ -31,7 +31,7 @@ const Header = () => {
               <>
                 <Link to="/diagnosis" className="text-gray-700 hover:text-teal-600 transition-colors">Diagnosis</Link>
                 <Link to="/vitals" className="text-gray-700 hover:text-teal-600 transition-colors">Vitals</Link>
-                <Link to="/predictor" className="text-gray-700 hover:text-teal-600 transition-colors">Predictor</Link>
+                <Link to="/predictor" className="text-gray-700 hover:text-teal-600 transition-colors">Report Analyzer</Link>
                 <Link to="/chat" className="text-gray-700 hover:text-teal-600 transition-colors">AI Assistant</Link>
                 <Link to="/civic" className="text-gray-700 hover:text-teal-600 transition-colors">Civic Issues</Link>
                 <Link to="/user-dashboard" className="text-gray-700 hover:text-teal-600 transition-colors">My Dashboard</Link>
@@ -73,7 +73,7 @@ const Header = () => {
                 <>
                   <Link to="/diagnosis" className="text-gray-700 hover:text-teal-600">Diagnosis</Link>
                   <Link to="/vitals" className="text-gray-700 hover:text-teal-600">Vitals</Link>
-                  <Link to="/predictor" className="text-gray-700 hover:text-teal-600">Predictor</Link>
+                  <Link to="/predictor" className="text-gray-700 hover:text-teal-600">Report Analyzer</Link>
                   <Link to="/chat" className="text-gray-700 hover:text-teal-600">AI Assistant</Link>
                   <Link to="/civic" className="text-gray-700 hover:text-teal-600">Civic Issues</Link>
                   <Link to="/user-dashboard" className="text-gray-700 hover:text-teal-600">My Dashboard</Link>

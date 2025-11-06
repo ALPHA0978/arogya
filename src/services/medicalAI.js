@@ -32,4 +32,91 @@ export class MedicalAI extends BaseAI {
       return getFallbackDiagnosis(symptoms)
     }
   }
+
+  static async analyzeDocument(documentText) {
+    try {
+      const systemPrompt = `You are a medical report analyzer. Analyze the medical report and return ONLY valid JSON:
+{
+  "summary": "brief summary of the report",
+  "keyFindings": ["finding1", "finding2"],
+  "abnormalValues": [{"parameter": "name", "value": "result", "normalRange": "range"}],
+  "recommendations": ["recommendation1", "recommendation2"],
+  "followUp": "follow-up actions needed",
+  "urgency": "low|medium|high"
+}`
+
+      const response = await this.callAPI(`Analyze this medical report: ${documentText}`, systemPrompt)
+      
+      return this.parseJSON(response) || {
+        summary: 'Report analysis completed',
+        keyFindings: ['Unable to parse specific findings'],
+        recommendations: ['Consult with healthcare provider for detailed interpretation']
+      }
+    } catch (error) {
+      console.error('Document analysis error:', error)
+      return {
+        error: 'Failed to analyze document. Please try again or consult a healthcare professional.'
+      }
+    }
+  }
+
+  static async predictHealthOutcomes(patientData, vitalsHistory) {
+    try {
+      const systemPrompt = `You are a health prediction AI. Return ONLY valid JSON:
+{
+  "riskAssessment": {
+    "diabetes": {"risk": "low|medium|high", "factors": ["factors"], "timeline": "timeframe"},
+    "hypertension": {"risk": "low|medium|high", "factors": ["factors"], "timeline": "timeframe"}
+  },
+  "healthTrajectory": {
+    "shortTerm": "1-3 month outlook",
+    "mediumTerm": "6-12 month outlook",
+    "longTerm": "1-5 year outlook"
+  },
+  "interventions": {
+    "preventive": ["prevention measures"],
+    "lifestyle": ["lifestyle changes"]
+  }
+}`
+
+      const prompt = `Predict health outcomes for: Age ${patientData.age}, Gender ${patientData.gender}, Medical History: ${patientData.medicalHistory}, Symptoms: ${patientData.symptoms}, Lifestyle: ${patientData.lifestyle}, Family History: ${patientData.familyHistory}, Vitals History: ${JSON.stringify(vitalsHistory)}`
+      
+      const response = await this.callAPI(prompt, systemPrompt)
+      
+      return this.parseJSON(response) || {
+        riskAssessment: { general: { risk: 'medium', factors: ['Insufficient data'], timeline: 'Unknown' } },
+        healthTrajectory: { shortTerm: 'Monitor symptoms', mediumTerm: 'Regular checkups', longTerm: 'Maintain healthy lifestyle' }
+      }
+    } catch (error) {
+      console.error('Health prediction error:', error)
+      return { error: 'Unable to generate predictions' }
+    }
+  }
+
+  static async analyzeHealthTrends(healthData) {
+    try {
+      const systemPrompt = `Analyze health trends and return ONLY valid JSON:
+{
+  "trendAnalysis": {
+    "vitals": {"direction": "improving|stable|declining", "confidence": "high|medium|low"},
+    "symptoms": {"progression": "better|same|worse"},
+    "overall": {"health": "good|fair|poor"}
+  },
+  "predictions": {
+    "nextWeek": "prediction",
+    "nextMonth": "prediction"
+  }
+}`
+
+      const response = await this.callAPI(`Analyze health trends: ${JSON.stringify(healthData)}`, systemPrompt)
+      
+      return this.parseJSON(response) || {
+        trendAnalysis: { overall: { health: 'fair' } },
+        predictions: { nextWeek: 'Continue monitoring', nextMonth: 'Regular follow-up recommended' }
+      }
+    } catch (error) {
+      console.error('Trend analysis error:', error)
+      return { error: 'Unable to analyze trends' }
+    }
+  }
 }

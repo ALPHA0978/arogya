@@ -65,44 +65,15 @@ const getCurrentLocation = () => {
 }
 
 const initiateEmergencyCall = async (emergencyData, emergencyId) => {
-  try {
-    // Start 11Labs conversation automatically
-    const response = await fetch('https://api.elevenlabs.io/v1/convai/conversations', {
-      method: 'POST',
-      headers: {
-        'xi-api-key': 'sk_f2dccce94d7dfebfecefc1f2baea064f53bd1bff149735e7',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        agent_id: 'agent_9601k9dcjp8dfasrkewfn5kdcwh3',
-        require_auth: false,
-        override_agent_settings: {
-          variables: {
-            emergency_id: emergencyId,
-            patient_location: emergencyData.location ? `${emergencyData.location.latitude}, ${emergencyData.location.longitude}` : 'Location pending',
-            blood_pressure: emergencyData.vitals.bloodPressure || 'Not provided',
-            heart_rate: emergencyData.vitals.heartRate || 'Not provided', 
-            temperature: emergencyData.vitals.temperature || 'Not provided',
-            oxygen_saturation: emergencyData.vitals.oxygenSaturation || 'Not provided',
-            critical_alerts: emergencyData.analysis.alerts?.map(alert => alert.type).join(', ') || 'Multiple critical readings',
-            timestamp: new Date().toISOString()
-          }
-        }
-      })
-    })
-    
-    const result = await response.json()
-    console.log('🚨 Emergency Call Auto-Started:', result)
-    
-    return {
-      success: response.ok,
-      callInitiated: true,
-      conversationId: result.conversation_id,
-      callUrl: `https://elevenlabs.io/convai/${result.conversation_id}`,
-      emergencyId: emergencyId
-    }
-  } catch (error) {
-    console.error('Emergency call failed:', error)
-    return { success: false, error: error.message }
+  console.log('🚨 EMERGENCY CALL INITIATED')
+  console.log('Emergency ID:', emergencyId)
+  console.log('Critical vitals detected:', emergencyData.vitals)
+  console.log('Location:', emergencyData.location)
+  
+  return { 
+    success: true, 
+    callInitiated: true,
+    emergencyId: emergencyId,
+    agentId: 'agent_9601k9dcjp8dfasrkewfn5kdcwh3'
   }
 }

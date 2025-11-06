@@ -1,17 +1,19 @@
 import { createContext, useContext, useEffect, useState } from 'react'
-import { auth } from '../services/firebaseConfig'
-import { onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from 'firebase/auth'
+import { auth, db, googleProvider } from '../services/firebaseConfig'
+import { onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, signInWithPopup } from 'firebase/auth'
+import { doc, setDoc, getDoc } from 'firebase/firestore'
 
 const AuthContext = createContext()
 
 export const useAuth = () => useContext(AuthContext)
 
 // Demo mode for when Firebase Auth is not configured
-const DEMO_MODE = true // Set to false when Firebase Auth is properly configured
+const DEMO_MODE = false // Set to false when Firebase Auth is properly configured
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [userProfile, setUserProfile] = useState(null)
   const [demoUser, setDemoUser] = useState(null)
 
   useEffect(() => {
@@ -26,8 +28,25 @@ export const AuthProvider = ({ children }) => {
       return
     }
 
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setUser(user)
+      if (user) {
+        // Fetch user profile from Firestore
+        try {
+          const profileDoc = await getDoc(doc(db, 'users', user.uid))
+          if (profileDoc.exists()) {
+            setUserProfile(profileDoc.data())
+          } else {
+            // New user without profile
+            setUserProfile({ profileComplete: false })
+          }
+        } catch (error) {
+          console.error('Error fetching user profile:', error)
+          setUserProfile({ profileComplete: false })
+        }
+      } else {
+        setUserProfile(null)
+      }
       setLoading(false)
     })
     return unsubscribe
@@ -47,6 +66,11 @@ export const AuthProvider = ({ children }) => {
       return Promise.resolve()
     }
     return signInWithEmailAndPassword(auth, email, password)
+  }
+
+  const loginWithGoogle = async () => {
+    if (DEMO_MODE) return Promise.resolve()
+    return signInWithPopup(auth, googleProvider)
   }
 
   const signup = async (email, password) => {
@@ -72,10 +96,35 @@ export const AuthProvider = ({ children }) => {
       localStorage.removeItem('demoUser')
       return Promise.resolve()
     }
+    setUserProfile(null)
     return signOut(auth)
   }
 
-  const value = { user: user || demoUser, login, signup, logout, isDemoMode: DEMO_MODE }
+  const updateUserProfile = async (profileData) => {
+    if (!user) return
+    
+    const userDoc = {
+      ...profileData,
+      email: user.email,
+      uid: user.uid,
+      createdAt: new Date().toISOString(),
+      profileComplete: true
+    }
+    
+    await setDoc(doc(db, 'users', user.uid), userDoc)
+    setUserProfile(userDoc)
+  }
+
+  const value = { 
+    user: user || demoUser, 
+    userProfile,
+    login, 
+    loginWithGoogle,
+    signup, 
+    logout, 
+    updateUserProfile,
+    isDemoMode: DEMO_MODE 
+  }
 
   return (
     <AuthContext.Provider value={value}>

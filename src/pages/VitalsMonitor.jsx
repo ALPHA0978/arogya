@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Activity, Heart, Thermometer, Droplets, AlertTriangle, TrendingUp, TrendingDown } from 'lucide-react'
 import { diagnosisAPI } from '../services/api'
+import { emergencyService } from '../services/emergencyService'
 
 const VitalsMonitor = () => {
   const [vitals, setVitals] = useState({
@@ -13,6 +14,8 @@ const VitalsMonitor = () => {
   const [analysis, setAnalysis] = useState(null)
   const [loading, setLoading] = useState(false)
   const [history, setHistory] = useState([])
+  const [showEmergencyDialog, setShowEmergencyDialog] = useState(false)
+  const [emergencyData, setEmergencyData] = useState(null)
 
   const analyzeVitals = async () => {
     if (!vitals.bloodPressure && !vitals.heartRate) return
@@ -21,6 +24,21 @@ const VitalsMonitor = () => {
     try {
       const result = await diagnosisAPI.analyzeVitals(vitals)
       setAnalysis(result)
+      
+      // Trigger emergency response if critical
+      if (result.emergencyTriggered) {
+        const emergencyResponse = await emergencyService.triggerEmergencyResponse(vitals, result)
+        
+        setEmergencyData({
+          success: emergencyResponse.success,
+          emergencyId: emergencyResponse.emergencyId,
+          callUrl: emergencyResponse.callUrl,
+          conversationId: emergencyResponse.conversationId,
+          vitals,
+          analysis: result
+        })
+        setShowEmergencyDialog(true)
+      }
       
       // Add to history
       const newEntry = {
@@ -174,6 +192,14 @@ const VitalsMonitor = () => {
                      analysis.status === 'concerning' ? <AlertTriangle className="w-5 h-5 text-yellow-500" /> :
                      <Activity className="w-5 h-5 text-green-500" />}
                     <span className="font-semibold capitalize">{analysis.status} Status</span>
+                    {analysis.emergencyTriggered && (
+                      <button
+                        onClick={() => setShowEmergencyDialog(true)}
+                        className="ml-2 px-3 py-1 bg-red-600 text-white text-xs rounded-full hover:bg-red-700 transition-colors"
+                      >
+                         View Emergency Alert
+                      </button>
+                    )}
                   </div>
                 </div>
 
@@ -189,7 +215,10 @@ const VitalsMonitor = () => {
                           'border-blue-300 bg-blue-50'
                         }`}>
                           <div className="font-medium">{alert.type}</div>
-                          <div className="text-sm text-gray-600">{alert.message}</div>
+                          <div className="text-sm text-gray-600 mb-2">{alert.message}</div>
+                          {alert.explanation && (
+                            <div className="text-xs text-gray-500 italic">{alert.explanation}</div>
+                          )}
                         </div>
                       ))}
                     </div>
@@ -249,6 +278,39 @@ const VitalsMonitor = () => {
                   </div>
                 </div>
               ))}
+            </div>
+          </div>
+        )}
+
+        {/* Emergency Dialog */}
+        {showEmergencyDialog && emergencyData && (
+          <div className="fixed top-4 right-4 z-50">
+            <div className="bg-red-600 text-white p-4 rounded-lg shadow-lg max-w-sm animate-pulse">
+              <div className="flex items-center gap-2 mb-2">
+                <AlertTriangle className="w-5 h-5" />
+                <span className="font-bold">🚨 EMERGENCY ALERT</span>
+              </div>
+              <p className="text-sm mb-3">🚑 Critical vitals detected! Your emergency request has been automatically sent to the nearest ambulance dispatch center. Medical AI assistant is standing by.</p>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setShowEmergencyDialog(false)}
+                  className="px-3 py-1 bg-white text-red-600 text-xs rounded hover:bg-gray-100"
+                >
+                  OK
+                </button>
+                <button
+                  onClick={() => {
+                    if (emergencyData.callUrl) {
+                      window.open(emergencyData.callUrl, '_blank')
+                    } else {
+                      alert('Emergency call is being prepared. Please wait a moment.')
+                    }
+                  }}
+                  className="px-3 py-1 bg-red-800 text-white text-xs rounded hover:bg-red-900"
+                >
+                  🎧 Join Emergency Call
+                </button>
+              </div>
             </div>
           </div>
         )}

@@ -1,55 +1,49 @@
 import { Link } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
 import { Heart, Bot, AlertTriangle, BookOpen, BarChart3, Shield, Activity, TrendingUp } from 'lucide-react'
 
 const Home = () => {
+  const { user, userProfile } = useAuth()
   const features = [
     {
       icon: <Heart className="w-8 h-8 text-teal-600" />,
       title: 'AI Diagnosis',
-      description: 'Advanced symptom analysis with comprehensive medical insights',
-      link: '/diagnosis'
+      description: 'Advanced symptom analysis with comprehensive medical insights'
     },
     {
       icon: <Activity className="w-8 h-8 text-red-600" />,
       title: 'Vitals Monitor',
-      description: 'Real-time vital signs monitoring with AI-powered analysis',
-      link: '/vitals'
+      description: 'Real-time vital signs monitoring with AI-powered analysis'
     },
     {
       icon: <Bot className="w-8 h-8 text-blue-600" />,
       title: 'Medical Chatbot',
-      description: 'Chat with our AI assistant for health guidance and first-aid',
-      link: '/chat'
+      description: 'Chat with our AI assistant for health guidance and first-aid'
     },
     {
       icon: <AlertTriangle className="w-8 h-8 text-orange-600" />,
       title: 'Civic Issues',
-      description: 'Report environmental and sanitation issues in your area',
-      link: '/civic'
+      description: 'Report environmental and sanitation issues in your area'
     },
     {
       icon: <BookOpen className="w-8 h-8 text-green-600" />,
       title: 'Health Awareness',
-      description: 'Learn about disease prevention and healthy practices',
-      link: '/awareness'
+      description: 'Learn about disease prevention and healthy practices'
     },
     {
       icon: <BarChart3 className="w-8 h-8 text-purple-600" />,
       title: 'Health Dashboard',
-      description: 'Track community health trends and outbreak alerts',
-      link: '/dashboard'
+      description: 'Track community health trends and outbreak alerts'
     },
     {
       icon: <TrendingUp className="w-8 h-8 text-purple-600" />,
       title: 'Health Predictor',
-      description: 'AI-powered health outcome predictions and risk assessment',
-      link: '/predictor'
+      description: 'AI-powered health outcome predictions and risk assessment'
     },
     {
       icon: <Shield className="w-8 h-8 text-red-600" />,
       title: 'Emergency Care',
-      description: 'Quick access to emergency contacts and procedures',
-      link: '/emergency'
+      description: 'Quick access to emergency contacts and procedures'
     }
   ]
 
@@ -67,13 +61,13 @@ const Home = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link 
-              to="/diagnosis" 
+              to={user && userProfile?.profileComplete ? "/diagnosis" : "/login"}
               className="bg-teal-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-teal-700 transition-colors"
             >
               Start Diagnosis
             </Link>
             <Link 
-              to="/chat" 
+              to={user && userProfile?.profileComplete ? "/chat" : "/login"}
               className="bg-white text-teal-600 px-8 py-3 rounded-lg font-semibold border-2 border-teal-600 hover:bg-teal-50 transition-colors"
             >
               Chat with AI
@@ -90,15 +84,14 @@ const Home = () => {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {features.map((feature, index) => (
-              <Link 
+              <div 
                 key={index}
-                to={feature.link}
-                className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all hover:scale-105 border border-gray-100"
+                className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100"
               >
                 <div className="mb-4">{feature.icon}</div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">{feature.title}</h3>
                 <p className="text-gray-600">{feature.description}</p>
-              </Link>
+              </div>
             ))}
           </div>
         </div>
@@ -110,8 +103,8 @@ const Home = () => {
           <h2 className="text-3xl font-bold text-gray-900 mb-12">Making Healthcare Accessible</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="p-6">
-              <div className="text-4xl font-bold text-teal-600 mb-2">10K+</div>
-              <div className="text-gray-600">Diagnoses Completed</div>
+              <div className="text-4xl font-bold text-teal-600 mb-2">50+</div>
+              <div className="text-gray-600">Early Users</div>
             </div>
             <div className="p-6">
               <div className="text-4xl font-bold text-blue-600 mb-2">95%</div>

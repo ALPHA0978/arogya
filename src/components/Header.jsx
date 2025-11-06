@@ -5,7 +5,7 @@ import { Menu, X, Heart, User, LogOut } from 'lucide-react'
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false)
-  const { user, logout } = useAuth()
+  const { user, userProfile, logout } = useAuth()
   const navigate = useNavigate()
 
   const handleLogout = async () => {
@@ -27,20 +27,29 @@ const Header = () => {
           </Link>
 
           <nav className="hidden md:flex items-center gap-8">
-            <Link to="/diagnosis" className="text-gray-700 hover:text-teal-600 transition-colors">Diagnosis</Link>
-            <Link to="/vitals" className="text-gray-700 hover:text-teal-600 transition-colors">Vitals</Link>
-            <Link to="/predictor" className="text-gray-700 hover:text-teal-600 transition-colors">Predictor</Link>
-            <Link to="/chat" className="text-gray-700 hover:text-teal-600 transition-colors">AI Assistant</Link>
-            <Link to="/civic" className="text-gray-700 hover:text-teal-600 transition-colors">Civic Issues</Link>
-            <Link to="/awareness" className="text-gray-700 hover:text-teal-600 transition-colors">Awareness</Link>
-            {user && <Link to="/dashboard" className="text-gray-700 hover:text-teal-600 transition-colors">Dashboard</Link>}
+            {user && userProfile?.profileComplete ? (
+              <>
+                <Link to="/diagnosis" className="text-gray-700 hover:text-teal-600 transition-colors">Diagnosis</Link>
+                <Link to="/vitals" className="text-gray-700 hover:text-teal-600 transition-colors">Vitals</Link>
+                <Link to="/predictor" className="text-gray-700 hover:text-teal-600 transition-colors">Predictor</Link>
+                <Link to="/chat" className="text-gray-700 hover:text-teal-600 transition-colors">AI Assistant</Link>
+                <Link to="/civic" className="text-gray-700 hover:text-teal-600 transition-colors">Civic Issues</Link>
+                <Link to="/user-dashboard" className="text-gray-700 hover:text-teal-600 transition-colors">My Dashboard</Link>
+              </>
+            ) : (
+              <Link to="/awareness" className="text-gray-700 hover:text-teal-600 transition-colors">Awareness</Link>
+            )}
           </nav>
 
           <div className="hidden md:flex items-center gap-4">
             {user ? (
               <div className="flex items-center gap-2">
-                <User className="w-5 h-5 text-gray-600" />
-                <span className="text-sm text-gray-700">{user.email}</span>
+                {user?.photoURL ? (
+                  <img src={user.photoURL} alt="Profile" className="w-8 h-8 rounded-full" />
+                ) : (
+                  <User className="w-5 h-5 text-gray-600" />
+                )}
+                <span className="text-sm text-gray-700">{userProfile?.fullName || user?.displayName || user?.email}</span>
                 <button onClick={handleLogout} className="p-2 text-gray-600 hover:text-red-600 transition-colors">
                   <LogOut className="w-5 h-5" />
                 </button>
@@ -60,16 +69,21 @@ const Header = () => {
         {isOpen && (
           <div className="md:hidden py-4 border-t border-gray-200">
             <div className="flex flex-col gap-4">
-              <Link to="/diagnosis" className="text-gray-700 hover:text-teal-600">Diagnosis</Link>
-              <Link to="/vitals" className="text-gray-700 hover:text-teal-600">Vitals</Link>
-              <Link to="/predictor" className="text-gray-700 hover:text-teal-600">Predictor</Link>
-              <Link to="/chat" className="text-gray-700 hover:text-teal-600">AI Assistant</Link>
-              <Link to="/civic" className="text-gray-700 hover:text-teal-600">Civic Issues</Link>
-              <Link to="/awareness" className="text-gray-700 hover:text-teal-600">Awareness</Link>
-              {user ? (
-                <button onClick={handleLogout} className="text-left text-red-600">Logout</button>
+              {user && userProfile?.profileComplete ? (
+                <>
+                  <Link to="/diagnosis" className="text-gray-700 hover:text-teal-600">Diagnosis</Link>
+                  <Link to="/vitals" className="text-gray-700 hover:text-teal-600">Vitals</Link>
+                  <Link to="/predictor" className="text-gray-700 hover:text-teal-600">Predictor</Link>
+                  <Link to="/chat" className="text-gray-700 hover:text-teal-600">AI Assistant</Link>
+                  <Link to="/civic" className="text-gray-700 hover:text-teal-600">Civic Issues</Link>
+                  <Link to="/user-dashboard" className="text-gray-700 hover:text-teal-600">My Dashboard</Link>
+                  <button onClick={handleLogout} className="text-left text-red-600">Logout</button>
+                </>
               ) : (
-                <Link to="/login" className="text-teal-600">Login</Link>
+                <>
+                  <Link to="/awareness" className="text-gray-700 hover:text-teal-600">Awareness</Link>
+                  {!user && <Link to="/login" className="text-teal-600">Login</Link>}
+                </>
               )}
             </div>
           </div>

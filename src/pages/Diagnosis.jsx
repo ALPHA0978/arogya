@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Upload, Camera, FileText, AlertCircle, CheckCircle, Clock } from 'lucide-react'
+import { Upload, Camera, FileText, AlertCircle, CheckCircle, Clock, User, Calendar } from 'lucide-react'
 import { diagnosisAPI } from '../services/api'
 import { db } from '../services/firebaseConfig'
 import { collection, addDoc } from 'firebase/firestore'
@@ -10,6 +10,20 @@ const Diagnosis = () => {
   const [image, setImage] = useState(null)
   const [loading, setLoading] = useState(false)
   const [result, setResult] = useState(null)
+  const [patientData, setPatientData] = useState({
+    age: '',
+    gender: '',
+    duration: '',
+    medicalHistory: '',
+    medications: '',
+    vitals: {
+      bloodPressure: '',
+      heartRate: '',
+      temperature: '',
+      oxygenSaturation: ''
+    }
+  })
+  const [showAdvanced, setShowAdvanced] = useState(false)
   const { user } = useAuth()
 
   const handleImageUpload = (e) => {
@@ -43,7 +57,23 @@ const Diagnosis = () => {
 
     setLoading(true)
     try {
-      const diagnosis = await diagnosisAPI.analyzeSymptoms(symptoms)
+      // Compile comprehensive symptom data
+      const comprehensiveData = {
+        ...patientData,
+        symptoms,
+        compiledSymptoms: `
+          Main symptoms: ${symptoms}
+          Pain: ${patientData.painDescription || 'None'} in ${patientData.painLocation || 'Not specified'}
+          Additional symptoms: ${[patientData.hasFever && 'Fever/Chills', patientData.hasFatigue && 'Fatigue'].filter(Boolean).join(', ') || 'None'}
+          Duration: ${patientData.duration}
+          Severity: ${patientData.severity || 'Not specified'}
+          Medical History: ${patientData.medicalHistory || 'None'}
+          Allergies: ${patientData.allergies || 'None'}
+          Family History: ${patientData.familyHistory || 'None'}
+        `.trim()
+      }
+      
+      const diagnosis = await diagnosisAPI.analyzeSymptoms(symptoms, comprehensiveData)
       setResult(diagnosis)
 
       // Save to Firestore (or localStorage in demo mode)
@@ -99,20 +129,168 @@ const Diagnosis = () => {
             <h2 className="text-2xl font-semibold text-gray-900 mb-6">Symptom Analysis</h2>
             
             <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Describe Your Symptoms
-                </label>
-                <div className="relative">
-                  <FileText className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
-                  <textarea
-                    value={symptoms}
-                    onChange={(e) => setSymptoms(e.target.value)}
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent resize-none"
-                    rows="6"
-                    placeholder="Describe your symptoms in detail... (e.g., fever, headache, cough, skin rash, etc.)"
-                    required
+              {/* Basic Patient Info */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Age</label>
+                  <input
+                    type="number"
+                    placeholder="Age"
+                    value={patientData.age}
+                    onChange={(e) => setPatientData(prev => ({...prev, age: e.target.value}))}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500"
                   />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Gender</label>
+                  <select
+                    value={patientData.gender}
+                    onChange={(e) => setPatientData(prev => ({...prev, gender: e.target.value}))}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500"
+                  >
+                    <option value="">Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* Describe Your Symptoms */}
+              <div className="mb-6">
+                <h4 className="text-lg font-semibold text-gray-900 mb-4">Describe Your Symptoms</h4>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">How are you feeling?</label>
+                  <div className="relative">
+                    <FileText className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+                    <textarea
+                      value={symptoms}
+                      onChange={(e) => setSymptoms(e.target.value)}
+                      className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent resize-none"
+                      rows="4"
+                      placeholder="Describe your symptoms in detail..."
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Pain description</label>
+                    <input
+                      type="text"
+                      placeholder="Sharp, dull, throbbing..."
+                      value={patientData.painDescription || ''}
+                      onChange={(e) => setPatientData(prev => ({...prev, painDescription: e.target.value}))}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Location and type of pain</label>
+                    <input
+                      type="text"
+                      placeholder="Head, chest, abdomen..."
+                      value={patientData.painLocation || ''}
+                      onChange={(e) => setPatientData(prev => ({...prev, painLocation: e.target.value}))}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Additional Symptoms */}
+              <div className="mb-6">
+                <h4 className="text-lg font-semibold text-gray-900 mb-4">Additional Symptoms</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <label className="flex items-center space-x-3 p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={patientData.hasFever || false}
+                      onChange={(e) => setPatientData(prev => ({...prev, hasFever: e.target.checked}))}
+                      className="w-4 h-4 text-teal-600 bg-gray-100 border-gray-300 rounded focus:ring-teal-500"
+                    />
+                    <span className="text-gray-700 font-medium">Fever/Chills</span>
+                  </label>
+                  
+                  <label className="flex items-center space-x-3 p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={patientData.hasFatigue || false}
+                      onChange={(e) => setPatientData(prev => ({...prev, hasFatigue: e.target.checked}))}
+                      className="w-4 h-4 text-teal-600 bg-gray-100 border-gray-300 rounded focus:ring-teal-500"
+                    />
+                    <span className="text-gray-700 font-medium">Fatigue</span>
+                  </label>
+                </div>
+              </div>
+
+              {/* Duration and Severity */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Duration</label>
+                  <select
+                    value={patientData.duration || ''}
+                    onChange={(e) => setPatientData(prev => ({...prev, duration: e.target.value}))}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500"
+                  >
+                    <option value="">Select duration</option>
+                    <option value="Less than 1 day">Less than 1 day</option>
+                    <option value="1-3 days">1-3 days</option>
+                    <option value="4-7 days">4-7 days</option>
+                    <option value="1-2 weeks">1-2 weeks</option>
+                    <option value="More than 2 weeks">More than 2 weeks</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Severity</label>
+                  <select
+                    value={patientData.severity || ''}
+                    onChange={(e) => setPatientData(prev => ({...prev, severity: e.target.value}))}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500"
+                  >
+                    <option value="">Select severity</option>
+                    <option value="Mild">Mild (1-3)</option>
+                    <option value="Moderate">Moderate (4-6)</option>
+                    <option value="Severe">Severe (7-8)</option>
+                    <option value="Very Severe">Very Severe (9-10)</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* Medical History */}
+              <div className="mb-6">
+                <h4 className="text-lg font-semibold text-gray-900 mb-4">Medical History (Optional)</h4>
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Past diseases/surgeries</label>
+                    <input
+                      type="text"
+                      placeholder="Diabetes, hypertension, surgeries..."
+                      value={patientData.medicalHistory}
+                      onChange={(e) => setPatientData(prev => ({...prev, medicalHistory: e.target.value}))}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Known allergies</label>
+                    <input
+                      type="text"
+                      placeholder="Drug allergies, food allergies..."
+                      value={patientData.allergies || ''}
+                      onChange={(e) => setPatientData(prev => ({...prev, allergies: e.target.value}))}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Family medical history</label>
+                    <input
+                      type="text"
+                      placeholder="Heart disease, diabetes, cancer..."
+                      value={patientData.familyHistory || ''}
+                      onChange={(e) => setPatientData(prev => ({...prev, familyHistory: e.target.value}))}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500"
+                    />
+                  </div>
                 </div>
               </div>
 
@@ -172,6 +350,17 @@ const Diagnosis = () => {
                   </div>
                 </div>
 
+                {/* Primary Diagnosis */}
+                {result.primaryDiagnosis && (
+                  <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
+                    <h3 className="text-lg font-semibold text-blue-900 mb-2">Primary Diagnosis</h3>
+                    <p className="text-blue-800 font-medium">{result.primaryDiagnosis}</p>
+                    {result.confidence && (
+                      <p className="text-sm text-blue-600 mt-1">Confidence: {result.confidence}%</p>
+                    )}
+                  </div>
+                )}
+
                 {/* Possible Diseases */}
                 <div>
                   <h3 className="text-lg font-semibold text-gray-900 mb-3">Possible Conditions</h3>
@@ -183,6 +372,64 @@ const Diagnosis = () => {
                     ))}
                   </div>
                 </div>
+
+                {/* Investigations */}
+                {result.investigations && result.investigations.length > 0 && (
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-3">Recommended Tests</h3>
+                    <div className="space-y-2">
+                      {result.investigations.map((test, index) => (
+                        <div key={index} className="p-3 bg-yellow-50 rounded-lg border border-yellow-200">
+                          <div className="flex justify-between items-center">
+                            <span className="text-gray-800 font-medium">{test.test}</span>
+                            <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                              test.priority === 'high' ? 'bg-red-100 text-red-800' :
+                              test.priority === 'medium' ? 'bg-yellow-100 text-yellow-800' :
+                              'bg-green-100 text-green-800'
+                            }`}>
+                              {test.priority} priority
+                            </span>
+                          </div>
+                          {test.reason && (
+                            <p className="text-sm text-gray-600 mt-1">{test.reason}</p>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Treatment Plan */}
+                {result.treatment && (
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-3">Treatment Plan</h3>
+                    <div className="space-y-3">
+                      {result.treatment.immediate && (
+                        <div className="p-3 bg-red-50 rounded-lg border border-red-200">
+                          <h4 className="font-medium text-red-900 mb-2">Immediate Actions</h4>
+                          <ul className="list-disc ml-5 text-red-800">
+                            {result.treatment.immediate.map((action, index) => (
+                              <li key={index}>{action}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                      {result.treatment.medications && (
+                        <div className="p-3 bg-green-50 rounded-lg border border-green-200">
+                          <h4 className="font-medium text-green-900 mb-2">Medications</h4>
+                          <div className="space-y-1">
+                            {result.treatment.medications.map((med, index) => (
+                              <div key={index} className="text-green-800">
+                                <span className="font-medium">{med.name}</span>
+                                {med.dosage && <span className="ml-2 text-sm">- {med.dosage}</span>}
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
 
                 {/* Advice */}
                 <div>

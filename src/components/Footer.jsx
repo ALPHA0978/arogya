@@ -40,21 +40,13 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Contact Info */}
+          {/* Medical Helpline */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
+            <h3 className="text-lg font-semibold mb-4">Medical Helpline</h3>
             <div className="space-y-3">
               <div className="flex items-center gap-2 text-gray-300">
-                <Mail className="w-4 h-4" />
-                <span className="text-sm">support@arogya.health</span>
-              </div>
-              <div className="flex items-center gap-2 text-gray-300">
                 <Phone className="w-4 h-4" />
-                <span className="text-sm">+91 1800-AROGYA</span>
-              </div>
-              <div className="flex items-center gap-2 text-gray-300">
-                <MapPin className="w-4 h-4" />
-                <span className="text-sm">Healthcare for All Initiative</span>
+                <span className="text-sm">108 - Emergency Medical</span>
               </div>
             </div>
           </div>
@@ -65,9 +57,9 @@ const Footer = () => {
             © 2024 Arogya Health Diagnostic System. All rights reserved.
           </p>
           <div className="flex gap-6 mt-4 md:mt-0">
-            <a href="#" className="text-gray-400 hover:text-teal-400 text-sm transition-colors">Privacy Policy</a>
-            <a href="#" className="text-gray-400 hover:text-teal-400 text-sm transition-colors">Terms of Service</a>
-            <a href="#" className="text-gray-400 hover:text-teal-400 text-sm transition-colors">Medical Disclaimer</a>
+            <a href="/privacy" className="text-gray-400 hover:text-teal-400 text-sm transition-colors">Privacy Policy</a>
+            <a href="/terms" className="text-gray-400 hover:text-teal-400 text-sm transition-colors">Terms of Service</a>
+            <a href="/disclaimer" className="text-gray-400 hover:text-teal-400 text-sm transition-colors">Medical Disclaimer</a>
           </div>
         </div>
       </div>

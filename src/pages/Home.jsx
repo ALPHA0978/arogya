@@ -1,13 +1,19 @@
 import { Link } from 'react-router-dom'
-import { Heart, Bot, AlertTriangle, BookOpen, BarChart3, Shield } from 'lucide-react'
+import { Heart, Bot, AlertTriangle, BookOpen, BarChart3, Shield, Activity, TrendingUp } from 'lucide-react'
 
 const Home = () => {
   const features = [
     {
       icon: <Heart className="w-8 h-8 text-teal-600" />,
       title: 'AI Diagnosis',
-      description: 'Get instant health analysis using advanced AI technology',
+      description: 'Advanced symptom analysis with comprehensive medical insights',
       link: '/diagnosis'
+    },
+    {
+      icon: <Activity className="w-8 h-8 text-red-600" />,
+      title: 'Vitals Monitor',
+      description: 'Real-time vital signs monitoring with AI-powered analysis',
+      link: '/vitals'
     },
     {
       icon: <Bot className="w-8 h-8 text-blue-600" />,
@@ -32,6 +38,12 @@ const Home = () => {
       title: 'Health Dashboard',
       description: 'Track community health trends and outbreak alerts',
       link: '/dashboard'
+    },
+    {
+      icon: <TrendingUp className="w-8 h-8 text-purple-600" />,
+      title: 'Health Predictor',
+      description: 'AI-powered health outcome predictions and risk assessment',
+      link: '/predictor'
     },
     {
       icon: <Shield className="w-8 h-8 text-red-600" />,

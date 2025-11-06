@@ -13,15 +13,9 @@ const ChatAssistant = () => {
   ])
   const [inputMessage, setInputMessage] = useState('')
   const [loading, setLoading] = useState(false)
-  const messagesEndRef = useRef(null)
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }
 
-  useEffect(() => {
-    scrollToBottom()
-  }, [messages])
+
 
   const handleSendMessage = async (e) => {
     e.preventDefault()
@@ -39,7 +33,7 @@ const ChatAssistant = () => {
     setLoading(true)
 
     try {
-      const chatHistory = messages.map(msg => ({
+      const chatHistory = messages.slice(-10).map(msg => ({
         role: msg.sender === 'user' ? 'user' : 'assistant',
         content: msg.text
       }))
@@ -73,7 +67,10 @@ const ChatAssistant = () => {
     "How to treat a minor cut?",
     "Signs of dehydration?",
     "When to see a doctor?",
-    "Basic first aid steps"
+    "Basic first aid steps",
+    "Normal blood pressure range?",
+    "Heart rate concerns?",
+    "Emergency symptoms?"
   ]
 
   const handleQuickQuestion = (question) => {
@@ -136,7 +133,7 @@ const ChatAssistant = () => {
                 </div>
               </div>
             )}
-            <div ref={messagesEndRef} />
+
           </div>
 
           {/* Quick Questions */}

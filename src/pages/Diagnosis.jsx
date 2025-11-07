@@ -139,7 +139,7 @@ const Diagnosis = () => {
                     <label className="block text-sm font-medium text-gray-700 mb-2">Age</label>
                     <input
                       type="number"
-                      placeholder="21"
+                      placeholder="age"
                       value={patientData.age}
                       onChange={(e) => setPatientData(prev => ({...prev, age: e.target.value}))}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -174,7 +174,7 @@ const Diagnosis = () => {
                         onChange={(e) => setSymptoms(e.target.value)}
                         className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
                         rows="4"
-                        placeholder="i having a pain in head"
+                        placeholder="Eg. I have Headache, Having truble to breath"
                         required
                       />
                     </div>
@@ -183,9 +183,9 @@ const Diagnosis = () => {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">Pain description</label>
-                      <input
+                      <input 
                         type="text"
-                        placeholder="sharp"
+                        placeholder="Eg, sharp; minor"
                         value={patientData.painDescription || ''}
                         onChange={(e) => setPatientData(prev => ({...prev, painDescription: e.target.value}))}
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -195,7 +195,7 @@ const Diagnosis = () => {
                       <label className="block text-sm font-medium text-gray-700 mb-2">Location and type of pain</label>
                       <input
                         type="text"
-                        placeholder="head"
+                        placeholder="Eg. head, black"
                         value={patientData.painLocation || ''}
                         onChange={(e) => setPatientData(prev => ({...prev, painLocation: e.target.value}))}
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -474,7 +474,7 @@ const Diagnosis = () => {
                                 href={`tel:${doctor.phone}`}
                                 className="inline-block bg-purple-600 text-white px-3 py-2 rounded text-sm font-medium hover:bg-purple-700 transition-colors"
                               >
-                                📞 Call Now
+                                 Call Now
                               </a>
                               <p className="text-xs text-purple-600 mt-1">{doctor.phone}</p>
                             </div>

@@ -142,7 +142,7 @@ const Diagnosis = () => {
                       placeholder="21"
                       value={patientData.age}
                       onChange={(e) => setPatientData(prev => ({...prev, age: e.target.value}))}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                   </div>
                   <div>
@@ -150,7 +150,7 @@ const Diagnosis = () => {
                     <select
                       value={patientData.gender}
                       onChange={(e) => setPatientData(prev => ({...prev, gender: e.target.value}))}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     >
                       <option value="">Select Gender</option>
                       <option value="male">Male</option>
@@ -172,7 +172,7 @@ const Diagnosis = () => {
                       <textarea
                         value={symptoms}
                         onChange={(e) => setSymptoms(e.target.value)}
-                        className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent resize-none"
+                        className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
                         rows="4"
                         placeholder="i having a pain in head"
                         required
@@ -188,7 +188,7 @@ const Diagnosis = () => {
                         placeholder="sharp"
                         value={patientData.painDescription || ''}
                         onChange={(e) => setPatientData(prev => ({...prev, painDescription: e.target.value}))}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       />
                     </div>
                     <div>
@@ -198,7 +198,7 @@ const Diagnosis = () => {
                         placeholder="head"
                         value={patientData.painLocation || ''}
                         onChange={(e) => setPatientData(prev => ({...prev, painLocation: e.target.value}))}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       />
                     </div>
                   </div>

@@ -6,7 +6,7 @@ const Home = () => {
   const { user, userProfile } = useAuth()
   const features = [
     {
-      icon: <Heart className="w-8 h-8 text-teal-600" />,
+      icon: <Heart className="w-8 h-8 text-blue-600" />,
       title: 'AI Diagnosis',
       description: 'Advanced symptom analysis with comprehensive medical insights'
     },
@@ -48,7 +48,7 @@ const Home = () => {
   ]
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-teal-50 to-blue-50">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50">
       {/* Hero Section */}
       <section className="py-20 px-4">
         <div className="max-w-4xl mx-auto text-center">
@@ -62,13 +62,13 @@ const Home = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link 
               to={user && userProfile?.profileComplete ? "/diagnosis" : "/login"}
-              className="bg-teal-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-teal-700 transition-colors"
+              className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
             >
               Start Diagnosis
             </Link>
             <Link 
               to={user && userProfile?.profileComplete ? "/chat" : "/login"}
-              className="bg-white text-teal-600 px-8 py-3 rounded-lg font-semibold border-2 border-teal-600 hover:bg-teal-50 transition-colors"
+              className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold border-2 border-blue-600 hover:bg-blue-50 transition-colors"
             >
               Chat with AI
             </Link>
@@ -103,7 +103,7 @@ const Home = () => {
           <h2 className="text-3xl font-bold text-gray-900 mb-12">Making Healthcare Accessible</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="p-6">
-              <div className="text-4xl font-bold text-teal-600 mb-2">50+</div>
+              <div className="text-4xl font-bold text-blue-600 mb-2">50+</div>
               <div className="text-gray-600">Early Users</div>
             </div>
             <div className="p-6">
@@ -111,7 +111,7 @@ const Home = () => {
               <div className="text-gray-600">Accuracy Rate</div>
             </div>
             <div className="p-6">
-              <div className="text-4xl font-bold text-green-600 mb-2">24/7</div>
+              <div className="text-4xl font-bold text-blue-600 mb-2">24/7</div>
               <div className="text-gray-600">AI Assistance</div>
             </div>
           </div>

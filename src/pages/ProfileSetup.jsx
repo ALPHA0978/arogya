@@ -251,7 +251,7 @@ const ProfileSetup = () => {
           </div>
           <div className="flex justify-center mt-2 text-sm text-gray-600 space-x-8">
             <div className="text-center w-20">
-              <span>Info</span>
+              <span>Basic Info</span>
             </div>
             <div className="text-center w-20">
               <span>Medical Details</span>

@@ -100,9 +100,9 @@ const ChatAssistant = () => {
                 <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
                   message.sender === 'user' 
                     ? 'bg-teal-600 text-white' 
-                    : 'bg-blue-600 text-white'
+                    : ''
                 }`}>
-                  {message.sender === 'user' ? <User className="w-4 h-4" /> : <Bot className="w-4 h-4" />}
+                  {message.sender === 'user' ? <User className="w-4 h-4" /> : <img src="/logo.png" alt="AI" className="w-6 h-6" />}
                 </div>
                 <div className={`max-w-xs lg:max-w-md px-4 py-2 rounded-2xl ${
                   message.sender === 'user'
@@ -121,8 +121,8 @@ const ChatAssistant = () => {
             
             {loading && (
               <div className="flex items-start gap-3">
-                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center">
-                  <Bot className="w-4 h-4" />
+                <div className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
+                  <img src="/logo.png" alt="AI" className="w-6 h-6" />
                 </div>
                 <div className="bg-gray-100 px-4 py-2 rounded-2xl">
                   <div className="flex space-x-1">

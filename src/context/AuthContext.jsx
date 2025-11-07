@@ -7,8 +7,8 @@ const AuthContext = createContext()
 
 export const useAuth = () => useContext(AuthContext)
 
-// Demo mode for when Firebase Auth is not configured
-const DEMO_MODE = false // Set to false when Firebase Auth is properly configured
+
+const DEMO_MODE = false // Set to false when Firebase Auth 
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null)

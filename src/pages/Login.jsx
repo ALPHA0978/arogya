@@ -39,7 +39,7 @@ const Login = () => {
       <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-8">
         <div className="text-center mb-8">
           <div className="flex justify-center mb-4">
-            <Heart className="w-12 h-12 text-teal-600" />
+            <img src="/logo.png" alt="Arogya" className="w-12 h-12" />
           </div>
           <h2 className="text-3xl font-bold text-gray-900">
             {isLogin ? 'Welcome Back' : 'Join Arogya'}

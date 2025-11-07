@@ -21,10 +21,22 @@ export class MedicalAI extends BaseAI {
     "medications": [{"name": "drug", "dosage": "amount"}],
     "lifestyle": ["recommendations"]
   },
+  "recommendedDoctors": [{
+    "name": "Dr. Name",
+    "specialty": "Relevant Specialty",
+    "hospital": "Hospital Name",
+    "address": "Address",
+    "phone": "+91-XXXXXXXXXX",
+    "experience": "X years",
+    "distance": "X.X km",
+    "rating": 4.5
+  }],
   "advice": "comprehensive medical advice"
 }`
 
-      const response = await this.callAPI(`Patient Analysis: Age ${patientData.age || 'unknown'}, Gender ${patientData.gender || 'unknown'}, Symptoms: ${patientData.compiledSymptoms || symptoms}, Duration: ${patientData.duration || 'unknown'}, Medical History: ${patientData.medicalHistory || 'none'}`, systemPrompt)
+      const response = await this.callAPI(`Patient Analysis: Age ${patientData.age || 'unknown'}, Gender ${patientData.gender || 'unknown'}, Symptoms: ${patientData.compiledSymptoms || symptoms}, Duration: ${patientData.duration || 'unknown'}, Medical History: ${patientData.medicalHistory || 'none'}, Location: ${patientData.location || 'unknown'}. 
+      
+      Based on the diagnosis, recommend 2 relevant specialist doctors near the patient's location with their contact details, hospital affiliation, and specialties.`, systemPrompt)
       
       return this.parseJSON(response) || getFallbackDiagnosis(symptoms)
     } catch (error) {

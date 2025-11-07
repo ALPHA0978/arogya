@@ -24,7 +24,7 @@ const Diagnosis = () => {
     }
   })
   const [showAdvanced, setShowAdvanced] = useState(false)
-  const { user } = useAuth()
+  const { user, userProfile } = useAuth()
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0]
@@ -61,6 +61,7 @@ const Diagnosis = () => {
       const comprehensiveData = {
         ...patientData,
         symptoms,
+        location: userProfile?.location || 'Unknown location',
         compiledSymptoms: `
           Main symptoms: ${symptoms}
           Pain: ${patientData.painDescription || 'None'} in ${patientData.painLocation || 'Not specified'}
@@ -123,101 +124,107 @@ const Diagnosis = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {/* Single Column Layout */}
+        <div className="max-w-4xl mx-auto space-y-8">
           {/* Input Form */}
-          <div className="bg-white rounded-2xl shadow-lg p-6">
+          <div className="bg-white rounded-2xl shadow-lg p-6 lg:p-8">
             <h2 className="text-2xl font-semibold text-gray-900 mb-6">Symptom Analysis</h2>
             
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-8">
               {/* Basic Patient Info */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Age</label>
-                  <input
-                    type="number"
-                    placeholder="Age"
-                    value={patientData.age}
-                    onChange={(e) => setPatientData(prev => ({...prev, age: e.target.value}))}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Gender</label>
-                  <select
-                    value={patientData.gender}
-                    onChange={(e) => setPatientData(prev => ({...prev, gender: e.target.value}))}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500"
-                  >
-                    <option value="">Gender</option>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                    <option value="other">Other</option>
-                  </select>
+              <div className="border-b border-gray-200 pb-6">
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">Patient Information</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Age</label>
+                    <input
+                      type="number"
+                      placeholder="21"
+                      value={patientData.age}
+                      onChange={(e) => setPatientData(prev => ({...prev, age: e.target.value}))}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Gender</label>
+                    <select
+                      value={patientData.gender}
+                      onChange={(e) => setPatientData(prev => ({...prev, gender: e.target.value}))}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                    >
+                      <option value="">Select Gender</option>
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                      <option value="other">Other</option>
+                    </select>
+                  </div>
                 </div>
               </div>
 
               {/* Describe Your Symptoms */}
-              <div className="mb-6">
-                <h4 className="text-lg font-semibold text-gray-900 mb-4">Describe Your Symptoms</h4>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">How are you feeling?</label>
-                  <div className="relative">
-                    <FileText className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
-                    <textarea
-                      value={symptoms}
-                      onChange={(e) => setSymptoms(e.target.value)}
-                      className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent resize-none"
-                      rows="4"
-                      placeholder="Describe your symptoms in detail..."
-                      required
-                    />
+              <div className="border-b border-gray-200 pb-6">
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">Describe Your Symptoms</h3>
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">How are you feeling?</label>
+                    <div className="relative">
+                      <FileText className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+                      <textarea
+                        value={symptoms}
+                        onChange={(e) => setSymptoms(e.target.value)}
+                        className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent resize-none"
+                        rows="4"
+                        placeholder="i having a pain in head"
+                        required
+                      />
+                    </div>
                   </div>
-                </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Pain description</label>
-                    <input
-                      type="text"
-                      placeholder="Sharp, dull, throbbing..."
-                      value={patientData.painDescription || ''}
-                      onChange={(e) => setPatientData(prev => ({...prev, painDescription: e.target.value}))}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Location and type of pain</label>
-                    <input
-                      type="text"
-                      placeholder="Head, chest, abdomen..."
-                      value={patientData.painLocation || ''}
-                      onChange={(e) => setPatientData(prev => ({...prev, painLocation: e.target.value}))}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500"
-                    />
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Pain description</label>
+                      <input
+                        type="text"
+                        placeholder="sharp"
+                        value={patientData.painDescription || ''}
+                        onChange={(e) => setPatientData(prev => ({...prev, painDescription: e.target.value}))}
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Location and type of pain</label>
+                      <input
+                        type="text"
+                        placeholder="head"
+                        value={patientData.painLocation || ''}
+                        onChange={(e) => setPatientData(prev => ({...prev, painLocation: e.target.value}))}
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
 
               {/* Additional Symptoms */}
-              <div className="mb-6">
-                <h4 className="text-lg font-semibold text-gray-900 mb-4">Additional Symptoms</h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <label className="flex items-center space-x-3 p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+              <div className="border-b border-gray-200 pb-6">
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">Additional Symptoms</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <label className="flex items-center space-x-3 p-4 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors">
                     <input
                       type="checkbox"
                       checked={patientData.hasFever || false}
                       onChange={(e) => setPatientData(prev => ({...prev, hasFever: e.target.checked}))}
-                      className="w-4 h-4 text-teal-600 bg-gray-100 border-gray-300 rounded focus:ring-teal-500"
+                      className="w-5 h-5 text-teal-600 bg-gray-100 border-gray-300 rounded focus:ring-teal-500"
                     />
                     <span className="text-gray-700 font-medium">Fever/Chills</span>
                   </label>
                   
-                  <label className="flex items-center space-x-3 p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+                  <label className="flex items-center space-x-3 p-4 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors">
                     <input
                       type="checkbox"
                       checked={patientData.hasFatigue || false}
                       onChange={(e) => setPatientData(prev => ({...prev, hasFatigue: e.target.checked}))}
-                      className="w-4 h-4 text-teal-600 bg-gray-100 border-gray-300 rounded focus:ring-teal-500"
+                      className="w-5 h-5 text-teal-600 bg-gray-100 border-gray-300 rounded focus:ring-teal-500"
                     />
                     <span className="text-gray-700 font-medium">Fatigue</span>
                   </label>
@@ -225,80 +232,82 @@ const Diagnosis = () => {
               </div>
 
               {/* Duration and Severity */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Duration</label>
-                  <select
-                    value={patientData.duration || ''}
-                    onChange={(e) => setPatientData(prev => ({...prev, duration: e.target.value}))}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500"
-                  >
-                    <option value="">Select duration</option>
-                    <option value="Less than 1 day">Less than 1 day</option>
-                    <option value="1-3 days">1-3 days</option>
-                    <option value="4-7 days">4-7 days</option>
-                    <option value="1-2 weeks">1-2 weeks</option>
-                    <option value="More than 2 weeks">More than 2 weeks</option>
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Severity</label>
-                  <select
-                    value={patientData.severity || ''}
-                    onChange={(e) => setPatientData(prev => ({...prev, severity: e.target.value}))}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500"
-                  >
-                    <option value="">Select severity</option>
-                    <option value="Mild">Mild (1-3)</option>
-                    <option value="Moderate">Moderate (4-6)</option>
-                    <option value="Severe">Severe (7-8)</option>
-                    <option value="Very Severe">Very Severe (9-10)</option>
-                  </select>
+              <div className="border-b border-gray-200 pb-6">
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">Symptom Details</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Duration</label>
+                    <select
+                      value={patientData.duration || ''}
+                      onChange={(e) => setPatientData(prev => ({...prev, duration: e.target.value}))}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                    >
+                      <option value="">Select duration</option>
+                      <option value="Less than 1 day">Less than 1 day</option>
+                      <option value="1-3 days">1-3 days</option>
+                      <option value="4-7 days">4-7 days</option>
+                      <option value="1-2 weeks">1-2 weeks</option>
+                      <option value="More than 2 weeks">More than 2 weeks</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Severity</label>
+                    <select
+                      value={patientData.severity || ''}
+                      onChange={(e) => setPatientData(prev => ({...prev, severity: e.target.value}))}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                    >
+                      <option value="">Select severity</option>
+                      <option value="Mild">Mild (1-3)</option>
+                      <option value="Moderate">Moderate (4-6)</option>
+                      <option value="Severe">Severe (7-8)</option>
+                      <option value="Very Severe">Very Severe (9-10)</option>
+                    </select>
+                  </div>
                 </div>
               </div>
 
               {/* Medical History */}
-              <div className="mb-6">
-                <h4 className="text-lg font-semibold text-gray-900 mb-4">Medical History (Optional)</h4>
+              <div className="border-b border-gray-200 pb-6">
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">Medical History (Optional)</h3>
                 <div className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">Past diseases/surgeries</label>
                     <input
                       type="text"
-                      placeholder="Diabetes, hypertension, surgeries..."
+                      placeholder="no"
                       value={patientData.medicalHistory}
                       onChange={(e) => setPatientData(prev => ({...prev, medicalHistory: e.target.value}))}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                     />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">Known allergies</label>
                     <input
                       type="text"
-                      placeholder="Drug allergies, food allergies..."
+                      placeholder="no"
                       value={patientData.allergies || ''}
                       onChange={(e) => setPatientData(prev => ({...prev, allergies: e.target.value}))}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                     />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">Family medical history</label>
                     <input
                       type="text"
-                      placeholder="Heart disease, diabetes, cancer..."
+                      placeholder="no"
                       value={patientData.familyHistory || ''}
                       onChange={(e) => setPatientData(prev => ({...prev, familyHistory: e.target.value}))}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                     />
                   </div>
                 </div>
               </div>
 
+              {/* Image Upload */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Upload Image (Optional)
-                </label>
-                <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-teal-400 transition-colors">
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">Upload Image (Optional)</h3>
+                <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-teal-400 transition-colors">
                   <input
                     type="file"
                     accept="image/*"
@@ -307,12 +316,12 @@ const Diagnosis = () => {
                     id="image-upload"
                   />
                   <label htmlFor="image-upload" className="cursor-pointer">
-                    <Upload className="w-8 h-8 text-gray-400 mx-auto mb-2" />
-                    <p className="text-gray-600">Click to upload image</p>
+                    <Upload className="w-10 h-10 text-gray-400 mx-auto mb-3" />
+                    <p className="text-gray-600 font-medium mb-1">Click to upload image</p>
                     <p className="text-sm text-gray-400">PNG, JPG up to 10MB</p>
                   </label>
                   {image && (
-                    <p className="mt-2 text-sm text-teal-600">Image selected: {image.name}</p>
+                    <p className="mt-3 text-sm text-teal-600 font-medium">Image selected: {image.name}</p>
                   )}
                 </div>
               </div>
@@ -320,7 +329,7 @@ const Diagnosis = () => {
               <button
                 type="submit"
                 disabled={loading || !symptoms.trim()}
-                className="w-full bg-teal-600 text-white py-3 rounded-lg font-semibold hover:bg-teal-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full bg-teal-600 text-white py-4 rounded-lg font-semibold text-lg hover:bg-teal-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {loading ? 'Analyzing...' : 'Analyze Symptoms'}
               </button>
@@ -328,7 +337,7 @@ const Diagnosis = () => {
           </div>
 
           {/* Results */}
-          <div className="bg-white rounded-2xl shadow-lg p-6">
+          <div className="bg-white rounded-2xl shadow-lg p-6 lg:p-8">
             <h2 className="text-2xl font-semibold text-gray-900 mb-6">Diagnosis Results</h2>
             
             {loading && (
@@ -438,6 +447,43 @@ const Diagnosis = () => {
                     <p className="text-blue-800">{result.advice}</p>
                   </div>
                 </div>
+
+                {/* Recommended Doctors */}
+                {result.recommendedDoctors && result.recommendedDoctors.length > 0 && (
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-3">Recommended Doctors Near You</h3>
+                    <div className="space-y-4">
+                      {result.recommendedDoctors.map((doctor, index) => (
+                        <div key={index} className="p-4 bg-purple-50 rounded-lg border border-purple-200">
+                          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
+                            <div className="flex-1">
+                              <h4 className="font-medium text-purple-900 text-base">{doctor.name}</h4>
+                              <p className="text-sm text-purple-700 font-medium">{doctor.specialty}</p>
+                              <p className="text-sm text-purple-600">{doctor.hospital}</p>
+                              <p className="text-sm text-purple-600 break-words">{doctor.address}</p>
+                              <div className="flex flex-wrap items-center gap-2 mt-2">
+                                <span className="text-xs bg-purple-100 px-2 py-1 rounded">{doctor.experience}</span>
+                                <span className="text-xs text-purple-500">{doctor.distance}</span>
+                                {doctor.rating && (
+                                  <span className="text-xs text-purple-600">⭐ {doctor.rating}/5</span>
+                                )}
+                              </div>
+                            </div>
+                            <div className="sm:text-right">
+                              <a 
+                                href={`tel:${doctor.phone}`}
+                                className="inline-block bg-purple-600 text-white px-3 py-2 rounded text-sm font-medium hover:bg-purple-700 transition-colors"
+                              >
+                                📞 Call Now
+                              </a>
+                              <p className="text-xs text-purple-600 mt-1">{doctor.phone}</p>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
 
                 {/* Disclaimer */}
                 <div className="p-4 bg-yellow-50 rounded-lg border border-yellow-200">

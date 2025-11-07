@@ -93,23 +93,23 @@ const CivicIssues = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4">
+    <div className="min-h-screen bg-gray-900 py-8 px-4">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Civic Issue Reporting</h1>
-          <p className="text-xl text-gray-600">
+          <h1 className="text-4xl font-bold text-white mb-4">Civic Issue Reporting</h1>
+          <p className="text-xl text-gray-300">
             Report environmental and sanitation issues in your community
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Report Form */}
-          <div className="bg-white rounded-2xl shadow-lg p-6">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-6">Submit New Report</h2>
+          <div className="bg-gray-800 rounded-2xl shadow-lg border border-gray-700 p-6">
+            <h2 className="text-2xl font-semibold text-white mb-6">Submit New Report</h2>
             
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-3">Issue Type</label>
+                <label className="block text-sm font-medium text-gray-300 mb-3">Issue Type</label>
                 <div className="grid grid-cols-2 gap-3">
                   {issueTypes.map((type) => (
                     <button
@@ -118,23 +118,23 @@ const CivicIssues = () => {
                       onClick={() => setFormData({ ...formData, type: type.id })}
                       className={`p-4 border-2 rounded-lg transition-all ${
                         formData.type === type.id
-                          ? 'border-teal-500 bg-teal-50'
-                          : 'border-gray-200 hover:border-gray-300'
+                          ? 'border-teal-500 bg-teal-900/30'
+                          : 'border-gray-600 hover:border-gray-500'
                       }`}
                     >
                       <div className={`${type.color} mb-2`}>{type.icon}</div>
-                      <div className="text-sm font-medium text-gray-900">{type.label}</div>
+                      <div className="text-sm font-medium text-gray-200">{type.label}</div>
                     </button>
                   ))}
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                <label className="block text-sm font-medium text-gray-300 mb-2">Description</label>
                 <textarea
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent resize-none"
+                  className="w-full px-4 py-3 bg-gray-700 border border-gray-600 text-white rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent resize-none placeholder-gray-400"
                   rows="4"
                   placeholder="Describe the issue in detail..."
                   required
@@ -142,15 +142,15 @@ const CivicIssues = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Location</label>
+                <label className="block text-sm font-medium text-gray-300 mb-2">Location</label>
                 <div className="flex gap-2">
                   <div className="relative flex-1">
-                    <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                    <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-500" />
                     <input
                       type="text"
                       value={formData.location}
                       onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                      className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                      className="w-full pl-10 pr-4 py-3 bg-gray-700 border border-gray-600 text-white rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent placeholder-gray-400"
                       placeholder="Enter location or address"
                       required
                     />
@@ -167,8 +167,8 @@ const CivicIssues = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Upload Image</label>
-                <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-teal-400 transition-colors">
+                <label className="block text-sm font-medium text-gray-300 mb-2">Upload Image</label>
+                <div className="border-2 border-dashed border-gray-600 rounded-lg p-6 text-center hover:border-teal-400 transition-colors">
                   <input
                     type="file"
                     accept="image/*"
@@ -177,9 +177,9 @@ const CivicIssues = () => {
                     id="civic-image-upload"
                   />
                   <label htmlFor="civic-image-upload" className="cursor-pointer">
-                    <Camera className="w-8 h-8 text-gray-400 mx-auto mb-2" />
-                    <p className="text-gray-600">Click to upload image</p>
-                    <p className="text-sm text-gray-400">PNG, JPG up to 10MB</p>
+                    <Camera className="w-8 h-8 text-gray-500 mx-auto mb-2" />
+                    <p className="text-gray-300">Click to upload image</p>
+                    <p className="text-sm text-gray-500">PNG, JPG up to 10MB</p>
                   </label>
                   {formData.image && (
                     <p className="mt-2 text-sm text-teal-600">Image selected: {formData.image.name}</p>
@@ -208,25 +208,25 @@ const CivicIssues = () => {
           </div>
 
           {/* Recent Reports */}
-          <div className="bg-white rounded-2xl shadow-lg p-6">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-6">Recent Reports</h2>
+          <div className="bg-gray-800 rounded-2xl shadow-lg border border-gray-700 p-6">
+            <h2 className="text-2xl font-semibold text-white mb-6">Recent Reports</h2>
             
             <div className="space-y-4">
               {reports.map((report) => (
-                <div key={report.id} className="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition-colors">
+                <div key={report.id} className="border border-gray-600 rounded-lg p-4 hover:bg-gray-700 transition-colors">
                   <div className="flex items-start justify-between mb-2">
-                    <h3 className="font-medium text-gray-900">{report.typeLabel || report.type}</h3>
+                    <h3 className="font-medium text-gray-200">{report.typeLabel || report.type}</h3>
                     <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(report.status)}`}>
                       {report.status}
                     </span>
                   </div>
-                  <div className="flex items-center gap-2 text-sm text-gray-600">
+                  <div className="flex items-center gap-2 text-sm text-gray-400">
                     <MapPin className="w-4 h-4" />
                     <span>{report.location}</span>
                   </div>
                   <p className="text-sm text-gray-500 mt-2">{report.date}</p>
                   {report.description && (
-                    <p className="text-sm text-gray-700 mt-1">{report.description.substring(0, 100)}...</p>
+                    <p className="text-sm text-gray-300 mt-1">{report.description.substring(0, 100)}...</p>
                   )}
                 </div>
               ))}

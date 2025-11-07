@@ -35,10 +35,10 @@ const Diagnosis = () => {
 
   const getUrgencyColor = (urgency) => {
     switch (urgency) {
-      case 'high': return 'text-red-600 bg-red-50 border-red-200'
-      case 'medium': return 'text-orange-600 bg-orange-50 border-orange-200'
-      case 'low': return 'text-green-600 bg-green-50 border-green-200'
-      default: return 'text-gray-600 bg-gray-50 border-gray-200'
+      case 'high': return 'text-red-400 bg-gray-700 border-gray-600'
+      case 'medium': return 'text-orange-400 bg-gray-700 border-gray-600'
+      case 'low': return 'text-green-400 bg-gray-700 border-gray-600'
+      default: return 'text-gray-400 bg-gray-700 border-gray-600'
     }
   }
 
@@ -115,11 +115,11 @@ const Diagnosis = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4">
+    <div className="min-h-screen bg-gray-900 py-8 px-4">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">AI Health Diagnosis</h1>
-          <p className="text-xl text-gray-600">
+          <h1 className="text-4xl font-bold text-white mb-4">AI Health Diagnosis</h1>
+          <p className="text-xl text-gray-300">
             Describe your symptoms or upload an image for AI-powered health analysis
           </p>
         </div>
@@ -127,30 +127,30 @@ const Diagnosis = () => {
         {/* Single Column Layout */}
         <div className="max-w-4xl mx-auto space-y-8">
           {/* Input Form */}
-          <div className="bg-white rounded-2xl shadow-lg p-6 lg:p-8">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-6">Symptom Analysis</h2>
+          <div className="bg-gray-800 rounded-2xl shadow-lg border border-gray-700 p-6 lg:p-8">
+            <h2 className="text-2xl font-semibold text-white mb-6">Symptom Analysis</h2>
             
             <form onSubmit={handleSubmit} className="space-y-8">
               {/* Basic Patient Info */}
               <div className="border-b border-gray-200 pb-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Patient Information</h3>
+                <h3 className="text-lg font-semibold text-white mb-4">Patient Information</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Age</label>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">Age</label>
                     <input
                       type="number"
                       placeholder="age"
                       value={patientData.age}
                       onChange={(e) => setPatientData(prev => ({...prev, age: e.target.value}))}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full px-4 py-3 bg-gray-700 border border-gray-600 text-white rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent placeholder-gray-400"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Gender</label>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">Gender</label>
                     <select
                       value={patientData.gender}
                       onChange={(e) => setPatientData(prev => ({...prev, gender: e.target.value}))}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full px-4 py-3 bg-gray-700 border border-gray-600 text-white rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                     >
                       <option value="">Select Gender</option>
                       <option value="male">Male</option>
@@ -162,17 +162,17 @@ const Diagnosis = () => {
               </div>
 
               {/* Describe Your Symptoms */}
-              <div className="border-b border-gray-200 pb-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Describe Your Symptoms</h3>
+              <div className="border-b border-gray-600 pb-6">
+                <h3 className="text-lg font-semibold text-white mb-4">Describe Your Symptoms</h3>
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">How are you feeling?</label>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">How are you feeling?</label>
                     <div className="relative">
-                      <FileText className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+                      <FileText className="absolute left-3 top-3 w-5 h-5 text-gray-500" />
                       <textarea
                         value={symptoms}
                         onChange={(e) => setSymptoms(e.target.value)}
-                        className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                        className="w-full pl-10 pr-4 py-3 bg-gray-700 border border-gray-600 text-white rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent resize-none placeholder-gray-400"
                         rows="4"
                         placeholder="Eg. I have Headache, Having truble to breath"
                         required
@@ -182,23 +182,23 @@ const Diagnosis = () => {
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Pain description</label>
+                      <label className="block text-sm font-medium text-gray-300 mb-2">Pain description</label>
                       <input 
                         type="text"
                         placeholder="Eg, sharp; minor"
                         value={patientData.painDescription || ''}
                         onChange={(e) => setPatientData(prev => ({...prev, painDescription: e.target.value}))}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        className="w-full px-4 py-3 bg-gray-700 border border-gray-600 text-white rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent placeholder-gray-400"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Location and type of pain</label>
+                      <label className="block text-sm font-medium text-gray-300 mb-2">Location and type of pain</label>
                       <input
                         type="text"
                         placeholder="Eg. head, black"
                         value={patientData.painLocation || ''}
                         onChange={(e) => setPatientData(prev => ({...prev, painLocation: e.target.value}))}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        className="w-full px-4 py-3 bg-gray-700 border border-gray-600 text-white rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent placeholder-gray-400"
                       />
                     </div>
                   </div>
@@ -206,41 +206,41 @@ const Diagnosis = () => {
               </div>
 
               {/* Additional Symptoms */}
-              <div className="border-b border-gray-200 pb-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Additional Symptoms</h3>
+              <div className="border-b border-gray-600 pb-6">
+                <h3 className="text-lg font-semibold text-white mb-4">Additional Symptoms</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <label className="flex items-center space-x-3 p-4 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors">
+                  <label className="flex items-center space-x-3 p-4 border border-gray-600 rounded-lg hover:bg-gray-700 cursor-pointer transition-colors">
                     <input
                       type="checkbox"
                       checked={patientData.hasFever || false}
                       onChange={(e) => setPatientData(prev => ({...prev, hasFever: e.target.checked}))}
-                      className="w-5 h-5 text-teal-600 bg-gray-100 border-gray-300 rounded focus:ring-teal-500"
+                      className="w-5 h-5 text-teal-400 bg-gray-700 border-gray-500 rounded focus:ring-teal-500"
                     />
-                    <span className="text-gray-700 font-medium">Fever/Chills</span>
+                    <span className="text-gray-300 font-medium">Fever/Chills</span>
                   </label>
                   
-                  <label className="flex items-center space-x-3 p-4 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors">
+                  <label className="flex items-center space-x-3 p-4 border border-gray-600 rounded-lg hover:bg-gray-700 cursor-pointer transition-colors">
                     <input
                       type="checkbox"
                       checked={patientData.hasFatigue || false}
                       onChange={(e) => setPatientData(prev => ({...prev, hasFatigue: e.target.checked}))}
-                      className="w-5 h-5 text-teal-600 bg-gray-100 border-gray-300 rounded focus:ring-teal-500"
+                      className="w-5 h-5 text-teal-400 bg-gray-700 border-gray-500 rounded focus:ring-teal-500"
                     />
-                    <span className="text-gray-700 font-medium">Fatigue</span>
+                    <span className="text-gray-300 font-medium">Fatigue</span>
                   </label>
                 </div>
               </div>
 
               {/* Duration and Severity */}
-              <div className="border-b border-gray-200 pb-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Symptom Details</h3>
+              <div className="border-b border-gray-600 pb-6">
+                <h3 className="text-lg font-semibold text-white mb-4">Symptom Details</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Duration</label>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">Duration</label>
                     <select
                       value={patientData.duration || ''}
                       onChange={(e) => setPatientData(prev => ({...prev, duration: e.target.value}))}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                      className="w-full px-4 py-3 bg-gray-700 border border-gray-600 text-white rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                     >
                       <option value="">Select duration</option>
                       <option value="Less than 1 day">Less than 1 day</option>
@@ -251,11 +251,11 @@ const Diagnosis = () => {
                     </select>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Severity</label>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">Severity</label>
                     <select
                       value={patientData.severity || ''}
                       onChange={(e) => setPatientData(prev => ({...prev, severity: e.target.value}))}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                      className="w-full px-4 py-3 bg-gray-700 border border-gray-600 text-white rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                     >
                       <option value="">Select severity</option>
                       <option value="Mild">Mild (1-3)</option>
@@ -268,37 +268,37 @@ const Diagnosis = () => {
               </div>
 
               {/* Medical History */}
-              <div className="border-b border-gray-200 pb-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Medical History (Optional)</h3>
+              <div className="border-b border-gray-600 pb-6">
+                <h3 className="text-lg font-semibold text-white mb-4">Medical History (Optional)</h3>
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Past diseases/surgeries</label>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">Past diseases/surgeries</label>
                     <input
                       type="text"
                       placeholder="no"
                       value={patientData.medicalHistory}
                       onChange={(e) => setPatientData(prev => ({...prev, medicalHistory: e.target.value}))}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                      className="w-full px-4 py-3 bg-gray-700 border border-gray-600 text-white rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent placeholder-gray-400"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Known allergies</label>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">Known allergies</label>
                     <input
                       type="text"
                       placeholder="no"
                       value={patientData.allergies || ''}
                       onChange={(e) => setPatientData(prev => ({...prev, allergies: e.target.value}))}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                      className="w-full px-4 py-3 bg-gray-700 border border-gray-600 text-white rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent placeholder-gray-400"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Family medical history</label>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">Family medical history</label>
                     <input
                       type="text"
                       placeholder="no"
                       value={patientData.familyHistory || ''}
                       onChange={(e) => setPatientData(prev => ({...prev, familyHistory: e.target.value}))}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                      className="w-full px-4 py-3 bg-gray-700 border border-gray-600 text-white rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent placeholder-gray-400"
                     />
                   </div>
                 </div>
@@ -306,8 +306,8 @@ const Diagnosis = () => {
 
               {/* Image Upload */}
               <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Upload Image (Optional)</h3>
-                <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-teal-400 transition-colors">
+                <h3 className="text-lg font-semibold text-white mb-4">Upload Image (Optional)</h3>
+                <div className="border-2 border-dashed border-gray-600 rounded-lg p-8 text-center hover:border-teal-400 transition-colors">
                   <input
                     type="file"
                     accept="image/*"
@@ -316,9 +316,9 @@ const Diagnosis = () => {
                     id="image-upload"
                   />
                   <label htmlFor="image-upload" className="cursor-pointer">
-                    <Upload className="w-10 h-10 text-gray-400 mx-auto mb-3" />
-                    <p className="text-gray-600 font-medium mb-1">Click to upload image</p>
-                    <p className="text-sm text-gray-400">PNG, JPG up to 10MB</p>
+                    <Upload className="w-10 h-10 text-gray-500 mx-auto mb-3" />
+                    <p className="text-gray-300 font-medium mb-1">Click to upload image</p>
+                    <p className="text-sm text-gray-500">PNG, JPG up to 10MB</p>
                   </label>
                   {image && (
                     <p className="mt-3 text-sm text-teal-600 font-medium">Image selected: {image.name}</p>
@@ -337,13 +337,13 @@ const Diagnosis = () => {
           </div>
 
           {/* Results */}
-          <div className="bg-white rounded-2xl shadow-lg p-6 lg:p-8">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-6">Diagnosis Results</h2>
+          <div className="bg-gray-800 rounded-2xl shadow-lg border border-gray-700 p-6 lg:p-8">
+            <h2 className="text-2xl font-semibold text-white mb-6">Diagnosis Results</h2>
             
             {loading && (
               <div className="text-center py-8">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-600 mx-auto mb-4"></div>
-                <p className="text-gray-600">Analyzing your symptoms...</p>
+                <p className="text-gray-300">Analyzing your symptoms...</p>
               </div>
             )}
 
@@ -361,22 +361,22 @@ const Diagnosis = () => {
 
                 {/* Primary Diagnosis */}
                 {result.primaryDiagnosis && (
-                  <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
-                    <h3 className="text-lg font-semibold text-blue-900 mb-2">Primary Diagnosis</h3>
-                    <p className="text-blue-800 font-medium">{result.primaryDiagnosis}</p>
+                  <div className="p-4 bg-gray-700 rounded-lg border border-gray-600">
+                    <h3 className="text-lg font-semibold text-blue-400 mb-2">Primary Diagnosis</h3>
+                    <p className="text-gray-200 font-medium">{result.primaryDiagnosis}</p>
                     {result.confidence && (
-                      <p className="text-sm text-blue-600 mt-1">Confidence: {result.confidence}%</p>
+                      <p className="text-sm text-blue-400 mt-1">Confidence: {result.confidence}%</p>
                     )}
                   </div>
                 )}
 
                 {/* Possible Diseases */}
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-3">Possible Conditions</h3>
+                  <h3 className="text-lg font-semibold text-white mb-3">Possible Conditions</h3>
                   <div className="space-y-2">
                     {result.diseases?.map((disease, index) => (
-                      <div key={index} className="p-3 bg-gray-50 rounded-lg">
-                        <span className="text-gray-800">{disease}</span>
+                      <div key={index} className="p-3 bg-gray-700 rounded-lg">
+                        <span className="text-gray-200">{disease}</span>
                       </div>
                     ))}
                   </div>
@@ -385,12 +385,12 @@ const Diagnosis = () => {
                 {/* Investigations */}
                 {result.investigations && result.investigations.length > 0 && (
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-3">Recommended Tests</h3>
+                    <h3 className="text-lg font-semibold text-white mb-3">Recommended Tests</h3>
                     <div className="space-y-2">
                       {result.investigations.map((test, index) => (
-                        <div key={index} className="p-3 bg-yellow-50 rounded-lg border border-yellow-200">
+                        <div key={index} className="p-3 bg-gray-700 rounded-lg border border-gray-600">
                           <div className="flex justify-between items-center">
-                            <span className="text-gray-800 font-medium">{test.test}</span>
+                            <span className="text-gray-200 font-medium">{test.test}</span>
                             <span className={`px-2 py-1 rounded-full text-xs font-medium ${
                               test.priority === 'high' ? 'bg-red-100 text-red-800' :
                               test.priority === 'medium' ? 'bg-yellow-100 text-yellow-800' :
@@ -400,7 +400,7 @@ const Diagnosis = () => {
                             </span>
                           </div>
                           {test.reason && (
-                            <p className="text-sm text-gray-600 mt-1">{test.reason}</p>
+                            <p className="text-sm text-gray-400 mt-1">{test.reason}</p>
                           )}
                         </div>
                       ))}
@@ -411,12 +411,12 @@ const Diagnosis = () => {
                 {/* Treatment Plan */}
                 {result.treatment && (
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-3">Treatment Plan</h3>
+                    <h3 className="text-lg font-semibold text-white mb-3">Treatment Plan</h3>
                     <div className="space-y-3">
                       {result.treatment.immediate && (
-                        <div className="p-3 bg-red-50 rounded-lg border border-red-200">
-                          <h4 className="font-medium text-red-900 mb-2">Immediate Actions</h4>
-                          <ul className="list-disc ml-5 text-red-800">
+                        <div className="p-3 bg-gray-700 rounded-lg border border-gray-600">
+                          <h4 className="font-medium text-red-400 mb-2">Immediate Actions</h4>
+                          <ul className="list-disc ml-5 text-gray-200">
                             {result.treatment.immediate.map((action, index) => (
                               <li key={index}>{action}</li>
                             ))}
@@ -424,11 +424,11 @@ const Diagnosis = () => {
                         </div>
                       )}
                       {result.treatment.medications && (
-                        <div className="p-3 bg-green-50 rounded-lg border border-green-200">
-                          <h4 className="font-medium text-green-900 mb-2">Medications</h4>
+                        <div className="p-3 bg-gray-700 rounded-lg border border-gray-600">
+                          <h4 className="font-medium text-green-400 mb-2">Medications</h4>
                           <div className="space-y-1">
                             {result.treatment.medications.map((med, index) => (
-                              <div key={index} className="text-green-800">
+                              <div key={index} className="text-gray-200">
                                 <span className="font-medium">{med.name}</span>
                                 {med.dosage && <span className="ml-2 text-sm">- {med.dosage}</span>}
                               </div>
@@ -442,26 +442,26 @@ const Diagnosis = () => {
 
                 {/* Advice */}
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-3">Recommended Actions</h3>
-                  <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
-                    <p className="text-blue-800">{result.advice}</p>
+                  <h3 className="text-lg font-semibold text-white mb-3">Recommended Actions</h3>
+                  <div className="p-4 bg-gray-700 rounded-lg border border-gray-600">
+                    <p className="text-gray-200">{result.advice}</p>
                   </div>
                 </div>
 
                 {/* Holistic Recommendations */}
                 {result.holisticRecommendations && (
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-3">Holistic Wellness Recommendations</h3>
+                    <h3 className="text-lg font-semibold text-white mb-3">Holistic Wellness Recommendations</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {result.holisticRecommendations.yoga && result.holisticRecommendations.yoga.length > 0 && (
-                        <div className="p-4 bg-green-50 rounded-lg border border-green-200">
-                          <h4 className="font-medium text-green-900 mb-2 flex items-center gap-2">
-                            🧘‍♀️ Yoga & Poses
+                        <div className="p-4 bg-gray-700 rounded-lg border border-gray-600">
+                          <h4 className="font-medium text-green-400 mb-2 flex items-center gap-2">
+                             Yoga & Poses
                           </h4>
-                          <ul className="text-sm text-green-800 space-y-1">
+                          <ul className="text-sm text-gray-200 space-y-1">
                             {result.holisticRecommendations.yoga.map((pose, index) => (
                               <li key={index} className="flex items-start gap-2">
-                                <span className="text-green-600">•</span>
+                                <span className="text-green-400">•</span>
                                 {pose}
                               </li>
                             ))}
@@ -470,14 +470,14 @@ const Diagnosis = () => {
                       )}
 
                       {result.holisticRecommendations.meditation && result.holisticRecommendations.meditation.length > 0 && (
-                        <div className="p-4 bg-purple-50 rounded-lg border border-purple-200">
-                          <h4 className="font-medium text-purple-900 mb-2 flex items-center gap-2">
-                            🧘‍♂️ Meditation
+                        <div className="p-4 bg-gray-700 rounded-lg border border-gray-600">
+                          <h4 className="font-medium text-purple-400 mb-2 flex items-center gap-2">
+                             Meditation
                           </h4>
-                          <ul className="text-sm text-purple-800 space-y-1">
+                          <ul className="text-sm text-gray-200 space-y-1">
                             {result.holisticRecommendations.meditation.map((technique, index) => (
                               <li key={index} className="flex items-start gap-2">
-                                <span className="text-purple-600">•</span>
+                                <span className="text-purple-400">•</span>
                                 {technique}
                               </li>
                             ))}
@@ -486,14 +486,14 @@ const Diagnosis = () => {
                       )}
 
                       {result.holisticRecommendations.diet && result.holisticRecommendations.diet.length > 0 && (
-                        <div className="p-4 bg-orange-50 rounded-lg border border-orange-200">
-                          <h4 className="font-medium text-orange-900 mb-2 flex items-center gap-2">
-                            🥗 Diet & Nutrition
+                        <div className="p-4 bg-gray-700 rounded-lg border border-gray-600">
+                          <h4 className="font-medium text-orange-400 mb-2 flex items-center gap-2">
+                             Diet & Nutrition
                           </h4>
-                          <ul className="text-sm text-orange-800 space-y-1">
+                          <ul className="text-sm text-gray-200 space-y-1">
                             {result.holisticRecommendations.diet.map((dietary, index) => (
                               <li key={index} className="flex items-start gap-2">
-                                <span className="text-orange-600">•</span>
+                                <span className="text-orange-400">•</span>
                                 {dietary}
                               </li>
                             ))}
@@ -502,14 +502,14 @@ const Diagnosis = () => {
                       )}
 
                       {result.holisticRecommendations.exercise && result.holisticRecommendations.exercise.length > 0 && (
-                        <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
-                          <h4 className="font-medium text-blue-900 mb-2 flex items-center gap-2">
-                            🏃‍♀️ Exercise
+                        <div className="p-4 bg-gray-700 rounded-lg border border-gray-600">
+                          <h4 className="font-medium text-blue-400 mb-2 flex items-center gap-2">
+                             Exercise
                           </h4>
-                          <ul className="text-sm text-blue-800 space-y-1">
+                          <ul className="text-sm text-gray-200 space-y-1">
                             {result.holisticRecommendations.exercise.map((exercise, index) => (
                               <li key={index} className="flex items-start gap-2">
-                                <span className="text-blue-600">•</span>
+                                <span className="text-blue-400">•</span>
                                 {exercise}
                               </li>
                             ))}
@@ -518,14 +518,14 @@ const Diagnosis = () => {
                       )}
 
                       {result.holisticRecommendations.homeRemedies && result.holisticRecommendations.homeRemedies.length > 0 && (
-                        <div className="p-4 bg-yellow-50 rounded-lg border border-yellow-200">
-                          <h4 className="font-medium text-yellow-900 mb-2 flex items-center gap-2">
-                            🏠 Home Remedies
+                        <div className="p-4 bg-gray-700 rounded-lg border border-gray-600">
+                          <h4 className="font-medium text-yellow-400 mb-2 flex items-center gap-2">
+                             Home Remedies
                           </h4>
-                          <ul className="text-sm text-yellow-800 space-y-1">
+                          <ul className="text-sm text-gray-200 space-y-1">
                             {result.holisticRecommendations.homeRemedies.map((remedy, index) => (
                               <li key={index} className="flex items-start gap-2">
-                                <span className="text-yellow-600">•</span>
+                                <span className="text-yellow-400">•</span>
                                 {remedy}
                               </li>
                             ))}
@@ -539,21 +539,21 @@ const Diagnosis = () => {
                 {/* Recommended Doctors */}
                 {result.recommendedDoctors && result.recommendedDoctors.length > 0 && (
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-3">Recommended Doctors Near You</h3>
+                    <h3 className="text-lg font-semibold text-white mb-3">Recommended Doctors Near You</h3>
                     <div className="space-y-4">
                       {result.recommendedDoctors.map((doctor, index) => (
-                        <div key={index} className="p-4 bg-purple-50 rounded-lg border border-purple-200">
+                        <div key={index} className="p-4 bg-gray-700 rounded-lg border border-gray-600">
                           <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
                             <div className="flex-1">
-                              <h4 className="font-medium text-purple-900 text-base">{doctor.name}</h4>
-                              <p className="text-sm text-purple-700 font-medium">{doctor.specialty}</p>
-                              <p className="text-sm text-purple-600">{doctor.hospital}</p>
-                              <p className="text-sm text-purple-600 break-words">{doctor.address}</p>
+                              <h4 className="font-medium text-white text-base">{doctor.name}</h4>
+                              <p className="text-sm text-purple-400 font-medium">{doctor.specialty}</p>
+                              <p className="text-sm text-gray-300">{doctor.hospital}</p>
+                              <p className="text-sm text-gray-300 break-words">{doctor.address}</p>
                               <div className="flex flex-wrap items-center gap-2 mt-2">
-                                <span className="text-xs bg-purple-100 px-2 py-1 rounded">{doctor.experience}</span>
-                                <span className="text-xs text-purple-500">{doctor.distance}</span>
+                                <span className="text-xs bg-gray-600 text-gray-300 px-2 py-1 rounded">{doctor.experience}</span>
+                                <span className="text-xs text-gray-400">{doctor.distance}</span>
                                 {doctor.rating && (
-                                  <span className="text-xs text-purple-600">⭐ {doctor.rating}/5</span>
+                                  <span className="text-xs text-gray-300">⭐ {doctor.rating}/5</span>
                                 )}
                               </div>
                             </div>
@@ -564,7 +564,7 @@ const Diagnosis = () => {
                               >
                                  Call Now
                               </a>
-                              <p className="text-xs text-purple-600 mt-1">{doctor.phone}</p>
+                              <p className="text-xs text-gray-400 mt-1">{doctor.phone}</p>
                             </div>
                           </div>
                         </div>
@@ -574,8 +574,8 @@ const Diagnosis = () => {
                 )}
 
                 {/* Disclaimer */}
-                <div className="p-4 bg-yellow-50 rounded-lg border border-yellow-200">
-                  <p className="text-sm text-yellow-800">
+                <div className="p-4 bg-gray-700 rounded-lg border border-gray-600">
+                  <p className="text-sm text-yellow-400">
                     <strong>Disclaimer:</strong> This AI diagnosis is for informational purposes only. 
                     Please consult with a qualified healthcare professional for proper medical advice.
                   </p>
@@ -584,7 +584,7 @@ const Diagnosis = () => {
             )}
 
             {!result && !loading && (
-              <div className="text-center py-8 text-gray-500">
+              <div className="text-center py-8 text-gray-400">
                 <Camera className="w-16 h-16 mx-auto mb-4 opacity-50" />
                 <p>Enter your symptoms to get AI-powered diagnosis</p>
               </div>

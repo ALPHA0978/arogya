@@ -221,14 +221,14 @@ const ProfileSetup = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-teal-50 to-blue-50 py-8 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 py-8 px-4">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-8">
           <img src="/logo.png" alt="Arogya" className="w-12 h-12 mx-auto mb-4" />
-          <h2 className="text-3xl font-bold text-gray-900">
+          <h2 className="text-3xl font-bold text-white">
             {userProfile?.profileComplete ? 'Edit Your Health Profile' : 'Complete Your Health Profile'}
           </h2>
-          <p className="text-gray-600 mt-2">
+          <p className="text-gray-300 mt-2">
             {userProfile?.profileComplete ? 'Update your information as needed' : 'Help us provide personalized healthcare recommendations'}
           </p>
           
@@ -249,7 +249,7 @@ const ProfileSetup = () => {
               ))}
             </div>
           </div>
-          <div className="flex justify-center mt-2 text-sm text-gray-600 space-x-8">
+          <div className="flex justify-center mt-2 text-sm text-gray-400 space-x-8">
             <div className="text-center w-20">
               <span>Basic Info</span>
             </div>
@@ -262,24 +262,24 @@ const ProfileSetup = () => {
           </div>
         </div>
 
-        <div className="bg-white rounded-2xl shadow-xl p-8">
+        <div className="bg-gray-800 rounded-2xl shadow-xl border border-gray-700 p-8">
           <div>
             {/* Step 1: Basic Information */}
             {currentStep === 1 && (
               <div className="space-y-6">
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">Basic Information</h3>
+                <h3 className="text-xl font-semibold text-white mb-4">Basic Information</h3>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">Full Name</label>
                     <div className="relative">
-                      <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                      <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-500" />
                       <input
                         type="text"
                         name="fullName"
                         value={formData.fullName}
                         onChange={handleChange}
-                        className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500"
+                        className="w-full pl-10 pr-4 py-3 bg-gray-700 border border-gray-600 text-white rounded-lg focus:ring-2 focus:ring-teal-500 placeholder-gray-400"
                         placeholder="Enter your full name"
                         required
                       />
@@ -287,15 +287,15 @@ const ProfileSetup = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Age</label>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">Age</label>
                     <div className="relative">
-                      <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                      <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-500" />
                       <input
                         type="number"
                         name="age"
                         value={formData.age}
                         onChange={handleChange}
-                        className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500"
+                        className="w-full pl-10 pr-4 py-3 bg-gray-700 border border-gray-600 text-white rounded-lg focus:ring-2 focus:ring-teal-500 placeholder-gray-400"
                         placeholder="Enter your age"
                         min="1"
                         max="120"
@@ -305,12 +305,12 @@ const ProfileSetup = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Gender</label>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">Gender</label>
                     <select
                       name="gender"
                       value={formData.gender}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500"
+                      className="w-full px-4 py-3 bg-gray-700 border border-gray-600 text-white rounded-lg focus:ring-2 focus:ring-teal-500"
                       required
                     >
                       <option value="">Select Gender</option>
@@ -321,15 +321,15 @@ const ProfileSetup = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">Phone Number</label>
                     <div className="relative">
-                      <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                      <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-500" />
                       <input
                         type="tel"
                         name="phone"
                         value={formData.phone}
                         onChange={handleChange}
-                        className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500"
+                        className="w-full pl-10 pr-4 py-3 bg-gray-700 border border-gray-600 text-white rounded-lg focus:ring-2 focus:ring-teal-500 placeholder-gray-400"
                         placeholder="Enter your phone number"
                         required
                       />
@@ -338,16 +338,16 @@ const ProfileSetup = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Location</label>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">Location</label>
                   <div className="flex gap-3">
                     <div className="relative flex-1">
-                      <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                      <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-500" />
                       <input
                         type="text"
                         name="location"
                         value={formData.location}
                         onChange={handleChange}
-                        className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500"
+                        className="w-full pl-10 pr-4 py-3 bg-gray-700 border border-gray-600 text-white rounded-lg focus:ring-2 focus:ring-teal-500 placeholder-gray-400"
                         placeholder="City, State (e.g., Mumbai, Maharashtra)"
                         required
                       />
@@ -363,24 +363,24 @@ const ProfileSetup = () => {
                       ) : (
                         <MapPin className="w-4 h-4" />
                       )}
-                      {gettingLocation ? 'Getting...' : 'Use GPS'}
+                      {gettingLocation ? 'Getting...' : 'GPS'}
                     </button>
                   </div>
                   {userCoordinates && (
-                    <p className="text-xs text-green-600 mt-1">
+                    <p className="text-xs text-green-400 mt-1">
                       📍 GPS Location: {userCoordinates.latitude.toFixed(4)}, {userCoordinates.longitude.toFixed(4)}
                     </p>
                   )}
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Insurance Information (Optional)</label>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">Insurance Information (Optional)</label>
                   <input
                     type="text"
                     name="insuranceInfo"
                     value={formData.insuranceInfo}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500"
+                    className="w-full px-4 py-3 bg-gray-700 border border-gray-600 text-white rounded-lg focus:ring-2 focus:ring-teal-500 placeholder-gray-400"
                     placeholder="Insurance provider and policy number"
                   />
                 </div>
@@ -390,16 +390,16 @@ const ProfileSetup = () => {
             {/* Step 2: Medical Details */}
             {currentStep === 2 && (
               <div className="space-y-6">
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">Medical Information</h3>
+                <h3 className="text-xl font-semibold text-white mb-4">Medical Information</h3>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Blood Group</label>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">Blood Group</label>
                     <select
                       name="bloodGroup"
                       value={formData.bloodGroup}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500"
+                      className="w-full px-4 py-3 bg-gray-700 border border-gray-600 text-white rounded-lg focus:ring-2 focus:ring-teal-500"
                     >
                       <option value="">Select Blood Group</option>
                       <option value="A+">A+</option>
@@ -415,37 +415,37 @@ const ProfileSetup = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Medical History</label>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">Medical History</label>
                   <textarea
                     name="medicalHistory"
                     value={formData.medicalHistory}
                     onChange={handleChange}
                     rows="3"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500"
+                    className="w-full px-4 py-3 bg-gray-700 border border-gray-600 text-white rounded-lg focus:ring-2 focus:ring-teal-500 placeholder-gray-400"
                     placeholder="Chronic conditions, past surgeries, family history..."
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Allergies</label>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">Allergies</label>
                   <textarea
                     name="allergies"
                     value={formData.allergies}
                     onChange={handleChange}
                     rows="2"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500"
+                    className="w-full px-4 py-3 bg-gray-700 border border-gray-600 text-white rounded-lg focus:ring-2 focus:ring-teal-500 placeholder-gray-400"
                     placeholder="Drug allergies, food allergies, environmental allergies..."
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Current Medications</label>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">Current Medications</label>
                   <textarea
                     name="medications"
                     value={formData.medications}
                     onChange={handleChange}
                     rows="2"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500"
+                    className="w-full px-4 py-3 bg-gray-700 border border-gray-600 text-white rounded-lg focus:ring-2 focus:ring-teal-500 placeholder-gray-400"
                     placeholder="Current medications with dosage..."
                   />
                 </div>
@@ -456,28 +456,28 @@ const ProfileSetup = () => {
             {currentStep === 3 && (
               <div className="space-y-8">
                 <div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-4">Emergency Contacts</h3>
+                  <h3 className="text-xl font-semibold text-white mb-4">Emergency Contacts</h3>
                   
                   {formData.emergencyContacts.map((contact, index) => (
-                    <div key={index} className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4 p-4 border border-gray-200 rounded-lg">
+                    <div key={index} className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4 p-4 border border-gray-600 rounded-lg">
                       <input
                         type="text"
                         placeholder="Contact Name"
                         value={contact.name}
                         onChange={(e) => updateEmergencyContact(index, 'name', e.target.value)}
-                        className="px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-teal-500"
+                        className="px-3 py-2 bg-gray-700 border border-gray-600 text-white rounded focus:ring-2 focus:ring-teal-500 placeholder-gray-400"
                       />
                       <input
                         type="tel"
                         placeholder="Phone Number"
                         value={contact.phone}
                         onChange={(e) => updateEmergencyContact(index, 'phone', e.target.value)}
-                        className="px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-teal-500"
+                        className="px-3 py-2 bg-gray-700 border border-gray-600 text-white rounded focus:ring-2 focus:ring-teal-500 placeholder-gray-400"
                       />
                       <select
                         value={contact.relation}
                         onChange={(e) => updateEmergencyContact(index, 'relation', e.target.value)}
-                        className="px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-teal-500"
+                        className="px-3 py-2 bg-gray-700 border border-gray-600 text-white rounded focus:ring-2 focus:ring-teal-500"
                       >
                         <option value="">Relation</option>
                         <option value="spouse">Spouse</option>
@@ -491,7 +491,7 @@ const ProfileSetup = () => {
                         <button
                           type="button"
                           onClick={() => removeEmergencyContact(index)}
-                          className="px-3 py-2 bg-red-100 text-red-600 rounded hover:bg-red-200"
+                          className="px-3 py-2 bg-red-900/30 text-red-400 rounded hover:bg-red-900/50"
                         >
                           <X className="w-4 h-4" />
                         </button>
@@ -502,7 +502,7 @@ const ProfileSetup = () => {
                   <button
                     type="button"
                     onClick={addEmergencyContact}
-                    className="flex items-center gap-2 px-4 py-2 bg-teal-100 text-teal-600 rounded-lg hover:bg-teal-200"
+                    className="flex items-center gap-2 px-4 py-2 bg-teal-900/30 text-teal-400 rounded-lg hover:bg-teal-900/50"
                   >
                     <Plus className="w-4 h-4" /> Add Another Contact
                   </button>
@@ -510,7 +510,7 @@ const ProfileSetup = () => {
 
                 {/* Hospital Selection */}
                 <div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-4">Select Hospitals (Optional)</h3>
+                  <h3 className="text-xl font-semibold text-white mb-4">Select Hospitals (Optional)</h3>
                   
                   {/* AI Hospital Finder */}
                   <div className="mb-6">
@@ -521,17 +521,17 @@ const ProfileSetup = () => {
                       className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
                     >
                       {hospitalLoading ? <Loader className="w-4 h-4 animate-spin" /> : <Search className="w-4 h-4" />}
-                      Find Nearby Hospitals
+                      check Nearby Hospitals
                     </button>
                     {!formData.location && (
-                      <p className="text-sm text-gray-500 mt-2">Please enter your location first to find hospitals</p>
+                      <p className="text-sm text-gray-400 mt-2">Please enter your location first to find hospitals</p>
                     )}
                   </div>
 
                   {/* Nearby Hospitals List */}
                   {nearbyHospitals.length > 0 && (
                     <div className="mb-6">
-                      <h4 className="font-medium text-gray-900 mb-3">Recommended Hospitals Near You (Click to select multiple):</h4>
+                      <h4 className="font-medium text-white mb-3">Recommended Hospitals Near You (Click to select multiple):</h4>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-60 overflow-y-auto">
                         {nearbyHospitals.map((hospital, index) => {
                           const isSelected = formData.selectedHospitals.some(h => h.name === hospital.name)
@@ -541,18 +541,18 @@ const ProfileSetup = () => {
                               onClick={() => selectHospital(hospital)}
                               className={`p-4 border rounded-lg cursor-pointer transition-colors ${
                                 isSelected
-                                  ? 'border-teal-500 bg-teal-50'
-                                  : 'border-gray-200 hover:border-teal-300'
+                                  ? 'border-teal-500 bg-teal-900/30'
+                                  : 'border-gray-600 hover:border-teal-400'
                               }`}
                             >
                               <div className="flex items-start justify-between">
                                 <div className="flex-1">
-                                  <h5 className="font-medium text-gray-900">{hospital.name}</h5>
-                                  <p className="text-sm text-gray-600">{hospital.address}</p>
-                                  <p className="text-sm text-gray-600">{hospital.phone}</p>
+                                  <h5 className="font-medium text-white">{hospital.name}</h5>
+                                  <p className="text-sm text-gray-300">{hospital.address}</p>
+                                  <p className="text-sm text-gray-300">{hospital.phone}</p>
                                   <div className="flex items-center gap-2 mt-1">
-                                    <span className="text-xs bg-gray-100 px-2 py-1 rounded">{hospital.type}</span>
-                                    <span className="text-xs text-gray-500">{hospital.distance}</span>
+                                    <span className="text-xs bg-gray-600 text-gray-300 px-2 py-1 rounded">{hospital.type}</span>
+                                    <span className="text-xs text-gray-400">{hospital.distance}</span>
                                   </div>
                                 </div>
                                 {isSelected && (
@@ -568,14 +568,14 @@ const ProfileSetup = () => {
 
                   {/* Manual Hospital Selection */}
                   <div className="border-t pt-6">
-                    <h4 className="font-medium text-gray-900 mb-3">Or Search for a Specific Hospital:</h4>
+                    <h4 className="font-medium text-white mb-3">Or Search for a Specific Hospital:</h4>
                     <div className="flex gap-3">
                       <input
                         type="text"
                         value={customHospitalName}
                         onChange={(e) => setCustomHospitalName(e.target.value)}
                         placeholder="Enter hospital name"
-                        className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500"
+                        className="flex-1 px-4 py-2 bg-gray-700 border border-gray-600 text-white rounded-lg focus:ring-2 focus:ring-teal-500 placeholder-gray-400"
                       />
                       <button
                         type="button"
@@ -591,19 +591,19 @@ const ProfileSetup = () => {
 
                   {/* Selected Hospitals Display */}
                   {formData.selectedHospitals.length > 0 && (
-                    <div className="mt-6 p-4 bg-green-50 border border-green-200 rounded-lg">
-                      <h4 className="font-medium text-green-900 mb-3">Selected Hospitals ({formData.selectedHospitals.length}):</h4>
+                    <div className="mt-6 p-4 bg-green-900/20 border border-green-700 rounded-lg">
+                      <h4 className="font-medium text-green-300 mb-3">Selected Hospitals ({formData.selectedHospitals.length}):</h4>
                       <div className="space-y-3">
                         {formData.selectedHospitals.map((hospital, index) => (
-                          <div key={index} className="bg-white p-3 rounded border flex justify-between items-start">
-                            <div className="text-green-800">
+                          <div key={index} className="bg-gray-700 p-3 rounded border border-gray-600 flex justify-between items-start">
+                            <div className="text-green-300">
                               <p className="font-medium">{hospital.name}</p>
                               <p className="text-sm">{hospital.address}</p>
                               <p className="text-sm">{hospital.phone}</p>
                             </div>
                             <button
                               onClick={() => selectHospital(hospital)}
-                              className="text-red-600 hover:text-red-800 p-1"
+                              className="text-red-400 hover:text-red-300 p-1"
                               title="Remove hospital"
                             >
                               <X className="w-4 h-4" />
@@ -623,7 +623,7 @@ const ProfileSetup = () => {
                 <button
                   type="button"
                   onClick={prevStep}
-                  className="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50"
+                  className="px-6 py-2 border border-gray-600 text-gray-300 rounded-lg hover:bg-gray-700"
                 >
                   Previous
                 </button>

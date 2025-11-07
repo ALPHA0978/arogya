@@ -105,11 +105,11 @@ const HealthPredictor = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4">
+    <div className="min-h-screen bg-gray-900 py-8 px-4">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Report Analyzer</h1>
-          <p className="text-xl text-gray-600">AI-powered medical report analysis</p>
+          <h1 className="text-4xl font-bold text-white mb-4">Report Analyzer</h1>
+          <p className="text-xl text-gray-300">AI-powered medical report analysis</p>
         </div>
 
         {false && (
@@ -407,8 +407,8 @@ const HealthPredictor = () => {
         {activeTab === 'analyzer' && (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Document Upload Section */}
-            <div className="bg-white rounded-2xl shadow-lg p-6">
-              <h2 className="text-2xl font-semibold text-gray-900 mb-6 flex items-center">
+            <div className="bg-gray-800 rounded-2xl shadow-lg border border-gray-700 p-6">
+              <h2 className="text-2xl font-semibold text-white mb-6 flex items-center">
                 <FileText className="w-6 h-6 mr-2 text-blue-500" />
                 Upload Medical Report
               </h2>
@@ -416,10 +416,10 @@ const HealthPredictor = () => {
               <div className="space-y-6">
                 {/* File Upload */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-300 mb-2">
                     Select Document
                   </label>
-                  <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-blue-400 transition-colors">
+                  <div className="border-2 border-dashed border-gray-600 rounded-lg p-6 text-center hover:border-blue-400 transition-colors">
                     <input
                       type="file"
                       accept=".txt,.pdf,.doc,.docx"
@@ -428,9 +428,9 @@ const HealthPredictor = () => {
                       id="document-upload"
                     />
                     <label htmlFor="document-upload" className="cursor-pointer">
-                      <Upload className="w-8 h-8 text-gray-400 mx-auto mb-2" />
-                      <p className="text-gray-600">Click to upload medical report</p>
-                      <p className="text-sm text-gray-400">Supports TXT, PDF, DOC files</p>
+                      <Upload className="w-8 h-8 text-gray-500 mx-auto mb-2" />
+                      <p className="text-gray-300">Click to upload medical report</p>
+                      <p className="text-sm text-gray-500">Supports TXT, PDF, DOC files</p>
                     </label>
                     {uploadedFile && (
                       <p className="mt-2 text-sm text-blue-600">File: {uploadedFile.name}</p>
@@ -440,14 +440,14 @@ const HealthPredictor = () => {
 
                 {/* Manual Text Input */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-300 mb-2">
                     Or Paste Report Text
                   </label>
                   <textarea
                     value={documentText}
                     onChange={(e) => setDocumentText(e.target.value)}
                     placeholder="Paste your medical report text here..."
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-3 bg-gray-700 border border-gray-600 text-white rounded-lg focus:ring-2 focus:ring-blue-500 placeholder-gray-400"
                     rows="10"
                   />
                 </div>
@@ -473,13 +473,13 @@ const HealthPredictor = () => {
             </div>
 
             {/* Analysis Results */}
-            <div className="bg-white rounded-2xl shadow-lg p-6">
-              <h2 className="text-2xl font-semibold text-gray-900 mb-6">Analysis Results</h2>
+            <div className="bg-gray-800 rounded-2xl shadow-lg border border-gray-700 p-6">
+              <h2 className="text-2xl font-semibold text-white mb-6">Analysis Results</h2>
               
               {analyzingReport && (
                 <div className="text-center py-8">
                   <Loader className="w-12 h-12 text-blue-600 animate-spin mx-auto mb-4" />
-                  <p className="text-gray-600">Analyzing medical report...</p>
+                  <p className="text-gray-300">Analyzing medical report...</p>
                 </div>
               )}
 
@@ -502,11 +502,11 @@ const HealthPredictor = () => {
                       {/* Key Findings */}
                       {reportAnalysis.keyFindings && (
                         <div>
-                          <h3 className="text-lg font-semibold text-gray-900 mb-3">Key Findings</h3>
+                          <h3 className="text-lg font-semibold text-white mb-3">Key Findings</h3>
                           <div className="space-y-2">
                             {reportAnalysis.keyFindings.map((finding, index) => (
-                              <div key={index} className="p-3 bg-gray-50 rounded-lg">
-                                <span className="text-gray-800">{finding}</span>
+                              <div key={index} className="p-3 bg-gray-700 rounded-lg">
+                                <span className="text-gray-200">{finding}</span>
                               </div>
                             ))}
                           </div>
@@ -516,7 +516,7 @@ const HealthPredictor = () => {
                       {/* Abnormal Values */}
                       {reportAnalysis.abnormalValues && reportAnalysis.abnormalValues.length > 0 && (
                         <div>
-                          <h3 className="text-lg font-semibold text-gray-900 mb-3">Abnormal Values</h3>
+                          <h3 className="text-lg font-semibold text-white mb-3">Abnormal Values</h3>
                           <div className="space-y-2">
                             {reportAnalysis.abnormalValues.map((value, index) => (
                               <div key={index} className="p-3 bg-yellow-50 rounded-lg border border-yellow-200">
@@ -533,12 +533,12 @@ const HealthPredictor = () => {
                       {/* Recommendations */}
                       {reportAnalysis.recommendations && (
                         <div>
-                          <h3 className="text-lg font-semibold text-gray-900 mb-3">Recommendations</h3>
+                          <h3 className="text-lg font-semibold text-white mb-3">Recommendations</h3>
                           <ul className="space-y-2">
                             {reportAnalysis.recommendations.map((rec, index) => (
                               <li key={index} className="flex items-start gap-2">
                                 <div className="w-2 h-2 bg-green-500 rounded-full mt-2"></div>
-                                <span className="text-gray-700">{rec}</span>
+                                <span className="text-gray-300">{rec}</span>
                               </li>
                             ))}
                           </ul>
@@ -558,7 +558,7 @@ const HealthPredictor = () => {
               )}
 
               {!reportAnalysis && !analyzingReport && (
-                <div className="text-center py-8 text-gray-500">
+                <div className="text-center py-8 text-gray-400">
                   <FileText className="w-16 h-16 mx-auto mb-4 opacity-50" />
                   <p>Upload a medical report to get AI analysis</p>
                 </div>

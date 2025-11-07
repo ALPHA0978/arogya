@@ -448,6 +448,94 @@ const Diagnosis = () => {
                   </div>
                 </div>
 
+                {/* Holistic Recommendations */}
+                {result.holisticRecommendations && (
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-3">Holistic Wellness Recommendations</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {result.holisticRecommendations.yoga && result.holisticRecommendations.yoga.length > 0 && (
+                        <div className="p-4 bg-green-50 rounded-lg border border-green-200">
+                          <h4 className="font-medium text-green-900 mb-2 flex items-center gap-2">
+                            🧘‍♀️ Yoga & Poses
+                          </h4>
+                          <ul className="text-sm text-green-800 space-y-1">
+                            {result.holisticRecommendations.yoga.map((pose, index) => (
+                              <li key={index} className="flex items-start gap-2">
+                                <span className="text-green-600">•</span>
+                                {pose}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+
+                      {result.holisticRecommendations.meditation && result.holisticRecommendations.meditation.length > 0 && (
+                        <div className="p-4 bg-purple-50 rounded-lg border border-purple-200">
+                          <h4 className="font-medium text-purple-900 mb-2 flex items-center gap-2">
+                            🧘‍♂️ Meditation
+                          </h4>
+                          <ul className="text-sm text-purple-800 space-y-1">
+                            {result.holisticRecommendations.meditation.map((technique, index) => (
+                              <li key={index} className="flex items-start gap-2">
+                                <span className="text-purple-600">•</span>
+                                {technique}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+
+                      {result.holisticRecommendations.diet && result.holisticRecommendations.diet.length > 0 && (
+                        <div className="p-4 bg-orange-50 rounded-lg border border-orange-200">
+                          <h4 className="font-medium text-orange-900 mb-2 flex items-center gap-2">
+                            🥗 Diet & Nutrition
+                          </h4>
+                          <ul className="text-sm text-orange-800 space-y-1">
+                            {result.holisticRecommendations.diet.map((dietary, index) => (
+                              <li key={index} className="flex items-start gap-2">
+                                <span className="text-orange-600">•</span>
+                                {dietary}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+
+                      {result.holisticRecommendations.exercise && result.holisticRecommendations.exercise.length > 0 && (
+                        <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
+                          <h4 className="font-medium text-blue-900 mb-2 flex items-center gap-2">
+                            🏃‍♀️ Exercise
+                          </h4>
+                          <ul className="text-sm text-blue-800 space-y-1">
+                            {result.holisticRecommendations.exercise.map((exercise, index) => (
+                              <li key={index} className="flex items-start gap-2">
+                                <span className="text-blue-600">•</span>
+                                {exercise}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+
+                      {result.holisticRecommendations.homeRemedies && result.holisticRecommendations.homeRemedies.length > 0 && (
+                        <div className="p-4 bg-yellow-50 rounded-lg border border-yellow-200">
+                          <h4 className="font-medium text-yellow-900 mb-2 flex items-center gap-2">
+                            🏠 Home Remedies
+                          </h4>
+                          <ul className="text-sm text-yellow-800 space-y-1">
+                            {result.holisticRecommendations.homeRemedies.map((remedy, index) => (
+                              <li key={index} className="flex items-start gap-2">
+                                <span className="text-yellow-600">•</span>
+                                {remedy}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+
                 {/* Recommended Doctors */}
                 {result.recommendedDoctors && result.recommendedDoctors.length > 0 && (
                   <div>

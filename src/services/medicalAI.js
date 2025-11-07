@@ -31,6 +31,13 @@ export class MedicalAI extends BaseAI {
     "distance": "X.X km",
     "rating": 4.5
   }],
+  "holisticRecommendations": {
+    "yoga": ["specific yoga poses for condition"],
+    "meditation": ["meditation techniques"],
+    "diet": ["dietary recommendations"],
+    "exercise": ["suitable exercises"],
+    "homeRemedies": ["safe home remedies"]
+  },
   "advice": "comprehensive medical advice"
 }`
 

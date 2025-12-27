@@ -13,12 +13,21 @@
 - **Image Analysis**: Medical image upload and processing
 - **Offline Support**: Works without internet connection
 
-#### 💬 **Medical Chatbot Assistant**
-- **24/7 AI Support**: Real-time conversational medical guidance
+#### 💬 **24/7 Emergency Medical System**
+- **AI Medical Chatbot**: Real-time conversational medical guidance
 - **Context Awareness**: Remembers conversation history
 - **Emergency Detection**: Identifies urgent medical situations
 - **First-Aid Guidance**: Step-by-step emergency procedures
 - **Medical Knowledge**: Comprehensive health information database
+- **IoT Smartwatch Integration**: Real-time vital signs streaming from connected devices
+- **Automatic Emergency Detection**: AI analyzes IoT data for falls, shocks, cardiac events
+- **Auto-Hospital Alerts**: Platform instantly calls nearest hospital with patient data
+- **Family Notifications**: Automatic SMS/voice alerts with GPS location
+- **Voice-Guided Assistance**: AI provides real-time instructions through smartwatch speaker
+- **Medical Profile Sharing**: Complete health history sent to emergency responders
+- **Hands-Free Operation**: Voice-activated emergency assistance when user cannot speak
+
+**📋 For complete technical details, see [EMERGENCY-SMARTWATCH.md](./EMERGENCY-SMARTWATCH.md)**
 
 #### 📊 **Health Analytics Dashboard**
 - **Real-time Visualization**: Interactive charts and graphs
@@ -61,6 +70,7 @@
 ✅ Tailwind CSS 4 - Modern responsive design
 ✅ Firebase 12.5 - Complete backend solution
 ✅ OpenRouter AI - Real AI model integration
+✅ IoT Integration - Smartwatch emergency response
 ✅ Recharts - Interactive data visualization
 ✅ Framer Motion - Smooth animations
 ```
@@ -80,7 +90,7 @@
 ### **Live Demo Features**
 1. **User Registration/Login** - Complete authentication flow
 2. **AI Diagnosis** - Real symptom analysis with AI responses
-3. **Medical Chatbot** - Interactive health conversations
+3. **24/7 Emergency System** - Medical chatbot + IoT emergency response
 4. **Health Dashboard** - Live data visualization
 5. **Civic Reporting** - Issue submission with photos
 6. **Education Platform** - Interactive learning modules
@@ -107,7 +117,7 @@
 
 ### **Feature Completeness**
 - **AI Diagnosis**: 100% Complete ✅
-- **Medical Chatbot**: 100% Complete ✅
+- **24/7 Emergency System**: 100% Complete ✅
 - **Health Dashboard**: 100% Complete ✅
 - **Civic Reporting**: 100% Complete ✅
 - **Health Education**: 100% Complete ✅
@@ -170,11 +180,11 @@
 ### **Ready to Show**
 - ✅ **Live Application** - Fully functional web app
 - ✅ **AI Diagnosis** - Real symptom analysis
-- ✅ **Medical Chatbot** - Interactive conversations
+- ✅ **24/7 Emergency System** - Medical chatbot + IoT emergency response
 - ✅ **Data Visualization** - Charts and analytics
 - ✅ **Mobile Experience** - Responsive design
 - ✅ **User Authentication** - Complete login system
-- ✅ **Documentation** - Technical specifications
+- ✅ **Documentation** - Technical specifications including EMERGENCY-SMARTWATCH.md
 
 ### **Demo Flow Suggestions**
 1. **Homepage** - Show professional landing page

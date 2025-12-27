@@ -96,6 +96,76 @@ When smartwatch IoT sensors detect emergency patterns, the Arogya platform initi
 
 ## 📞 **EMERGENCY COMMUNICATION SYSTEM**
 
+### **Multi-Channel Emergency Chat Hub**
+The Arogya Emergency System includes a comprehensive real-time chat system that automatically activates during emergencies:
+
+#### **Emergency Chat Participants**
+- **👤 Patient/User** - Person experiencing the emergency
+- **👨‍⚕️ Emergency Dispatcher** - Hospital emergency coordinator
+- **👩‍⚕️ Paramedic Team** - Ambulance crew en route
+- **👨‍👩‍👧‍👦 Family Members** - Emergency contacts
+- **🤖 Arogya AI Assistant** - Real-time medical guidance
+- **👥 Bystanders** - People nearby who can help
+
+#### **Real-Time Emergency Chat Flow**
+```
+Emergency Detected → Auto-Chat Creation → Multi-Party Communication
+     ↓
+┌─────────────────────────────────────────────────────────────┐
+│                 EMERGENCY CHAT ROOM                        │
+│  🚨 CARDIAC EMERGENCY - John Doe - Location: Main St      │
+├─────────────────────────────────────────────────────────────┤
+│ 🤖 Arogya AI: Emergency detected. Calling hospital...      │
+│ 🏥 Dispatcher: Ambulance dispatched. ETA 8 minutes        │
+│ 👨‍⚕️ Paramedic: Receiving vital signs. Continue CPR        │
+│ 👥 Bystander: Started chest compressions                   │
+│ 👨‍👩‍👧‍👦 Wife: On my way to hospital                          │
+│ 🤖 Arogya AI: Push harder, 100-120 compressions/min      │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### **Emergency Chat Scenarios**
+
+#### **Scenario 1: Cardiac Emergency Chat**
+```
+🤖 Arogya AI [3:47 PM]: CARDIAC EMERGENCY DETECTED
+                        Patient: John Doe, Age 65
+                        Location: 123 Main St
+                        Calling 911 and emergency contacts...
+
+🏥 City Hospital [3:47 PM]: Emergency received. Dispatching ambulance.
+                           ETA: 8 minutes. Cardiac team alerted.
+
+👥 Bystander [3:48 PM]: I'm here with him. What should I do?
+
+🤖 Arogya AI [3:48 PM]: Check if he's breathing. If not, start CPR:
+                        1. Place hands on center of chest
+                        2. Push hard and fast, 100-120 per minute
+                        3. I'll count with you: 1, 2, 3, 4...
+
+👨‍⚕️ Paramedic Unit 7 [3:49 PM]: En route. Receiving live vitals.
+                                 Continue CPR. We see heart rhythm.
+
+👩 Wife - Sarah [3:49 PM]: OMG! I'm 10 minutes away. Is he okay?
+
+🤖 Arogya AI [3:49 PM]: Sarah, John is receiving CPR. Paramedics 
+                        arriving in 6 minutes. Meet at City Hospital.
+                        His medical history shared with doctors.
+```
+
+### **Smartwatch Chat Interface**
+```
+┌─────────────────────────┐
+│    🚨 EMERGENCY CHAT    │
+├─────────────────────────┤
+│ 🤖 AI: Help is coming  │
+│ 🏥 Hospital: 5 min ETA  │
+│ 👩 Wife: On my way      │
+├─────────────────────────┤
+│ [🎤 Speak] [👍 OK] [❌ Help] │
+└─────────────────────────┘
+```
+
 ### **Hospital Emergency Call**
 **Automatic Hospital Notification**:
 ```

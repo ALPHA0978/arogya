@@ -65,7 +65,7 @@ const getCurrentLocation = () => {
 }
 
 const initiateEmergencyCall = async (emergencyData, emergencyId) => {
-  console.log('🚨 EMERGENCY CALL INITIATED')
+  console.log('EMERGENCY CALL INITIATED')
   console.log('Emergency ID:', emergencyId)
   console.log('Critical vitals detected:', emergencyData.vitals)
   console.log('Location:', emergencyData.location)

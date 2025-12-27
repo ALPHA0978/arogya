@@ -579,6 +579,10 @@ const Diagnosis = () => {
                     <strong>Disclaimer:</strong> This AI diagnosis is for informational purposes only. 
                     Please consult with a qualified healthcare professional for proper medical advice.
                   </p>
+                  <p className="text-sm text-yellow-400 mt-2">
+                    <strong>Help us improve:</strong> After consulting your doctor, please rate our diagnosis 
+                    accuracy so our AI system can learn and improve its predictions.
+                  </p>
                 </div>
               </div>
             )}

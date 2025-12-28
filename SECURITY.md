@@ -2,7 +2,7 @@
 
 ## 🔒 **PROPRIETARY SOFTWARE NOTICE**
 
-**COPYRIGHT © 2024 AROGYA HEALTH SYSTEMS. ALL RIGHTS RESERVED.**
+**COPYRIGHT © 2025 AROGYA HEALTH SYSTEMS. ALL RIGHTS RESERVED.**
 
 This software and all associated documentation, code, algorithms, designs, and intellectual property are the exclusive property of the Arogya development team and are protected under international copyright, patent, and trade secret laws.
 
@@ -58,7 +58,7 @@ This system contains proprietary innovations including:
 
 ### **COPYRIGHT NOTICE**
 ```
-Copyright © 2024 Arogya Health Systems
+Copyright © 2025 Arogya Health Systems
 All rights reserved. No part of this software may be reproduced, 
 distributed, or transmitted in any form or by any means, including 
 photocopying, recording, or other electronic or mechanical methods, 
@@ -201,8 +201,8 @@ Protected under:
 By accessing this system, you acknowledge that you have read, understood, and agree to comply with all terms outlined in this security document. Violation of these terms constitutes breach of contract and infringement of intellectual property rights.
 
 **Document Version**: 1.0  
-**Last Updated**: January 2024  
-**Next Review**: July 2024  
+**Last Updated**: January 2025  
+**Next Review**: July 2025  
 
 ---
 

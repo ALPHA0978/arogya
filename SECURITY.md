@@ -145,8 +145,6 @@ Commercial use requires:
 If you discover unauthorized use of this intellectual property:
 
 **Email**: legal@arogya-health.com  
-**Phone**: +1-800-AROGYA-IP  
-**Address**: Arogya Legal Department, [Address]  
 
 ### **REQUIRED INFORMATION**
 - **Location** - Where the violation was discovered
